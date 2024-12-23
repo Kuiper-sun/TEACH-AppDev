@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Dto.UserAccountDto;
+using API.Interfaces;
 using API.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,11 @@ namespace API.Controllers
     public class UserAccountController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public UserAccountController(ApplicationDbContext context)
+        private readonly IUserAccountRepository _userAccountRepository;
+        public UserAccountController(ApplicationDbContext context, IUserAccountRepository userAccountRepository)
         {
             _context = context;
+            _userAccountRepository = userAccountRepository;
         }
 
 
@@ -46,8 +49,7 @@ namespace API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateUserAccountRequestDto createUserDto)
         {
             var userAccount = createUserDto.ToUserAccountFromCreateUserDto();
-            await _context.UserAccounts.AddAsync(userAccount);
-            await _context.SaveChangesAsync();
+            await _userAccountRepository.CreateAsync(userAccount);
             return CreatedAtAction(nameof(GetUserAccount), new { id = userAccount.Id }, userAccount.ToUserAccountDto());
         }
 
@@ -70,6 +72,18 @@ namespace API.Controllers
             _context.UserAccounts.Update(userAccount);
             await _context.SaveChangesAsync();
             return Ok(userAccount.ToUserAccountDto());
+        }
+
+        [HttpDelete]
+        [Route("{id}")] 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userAccount = await _userAccountRepository.DeleteAsync(id);
+            if (userAccount == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
     }
 }
