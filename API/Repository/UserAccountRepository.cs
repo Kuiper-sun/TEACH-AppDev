@@ -40,19 +40,39 @@ namespace API.Repository
             return user;
         }
 
-        public Task<UserAccount?> GetByIdAsync(int id)
+        public async Task<UserAccount?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var user = await _context.UserAccounts.Include(t => t.SchoolTasks).FirstOrDefaultAsync(x => x.Id == id);
+            if(user == null)
+            {
+                return null;
+            }
+
+            return user;
         }
 
-        public Task<List<UserAccount>> GetUserAccountsAsync()
+        public async Task<List<UserAccount>> GetUserAccountsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.UserAccounts.Include(t => t.SchoolTasks).ToListAsync();
         }
 
-        public Task<UserAccount?> UpdateAsync(int id, UpdateAccountRequestDto updateDto)
+        public async Task<UserAccount?> UpdateAsync(int id, UpdateAccountRequestDto updateDto)
         {
-            throw new NotImplementedException();
+            var userModel = await _context.UserAccounts.FirstOrDefaultAsync(x => x.Id == id);
+            if (userModel == null)
+            {
+                return null;
+            }
+
+            //Automatic mapping of the properties from the DTO to the Model
+            _context.Entry(userModel).CurrentValues.SetValues(updateDto);
+            await _context.SaveChangesAsync();
+            return userModel;
+        }
+
+        public async Task<bool> UserAccountExistsAsync(int id)
+        {
+            return await _context.UserAccounts.AnyAsync(x => x.Id == id);
         }
     }
 }

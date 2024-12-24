@@ -16,11 +16,11 @@ namespace API.Controllers
     public class UserAccountController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IUserAccountRepository _userAccountRepository;
+        private readonly IUserAccountRepository _userAccountRepo;
         public UserAccountController(ApplicationDbContext context, IUserAccountRepository userAccountRepository)
         {
             _context = context;
-            _userAccountRepository = userAccountRepository;
+            _userAccountRepo= userAccountRepository;
         }
 
 
@@ -28,15 +28,16 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetUserAccounts()
         {
-            var userAccounts = await _context.UserAccounts.ToListAsync();
-            return Ok(userAccounts);
+            var userAccounts = await _userAccountRepo.GetUserAccountsAsync();
+            var userAccountsDto = userAccounts.Select(u => u.ToUserAccountDto());
+            return Ok(userAccountsDto);
         }
 
         // GET: api/UserAccount/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUserAccount(int id)
         {
-            var userAccount = await _context.UserAccounts.FindAsync(id);
+            var userAccount = await _userAccountRepo.GetByIdAsync(id);
             if (userAccount == null)
             {
                 return NotFound();
@@ -49,7 +50,7 @@ namespace API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateUserAccountRequestDto createUserDto)
         {
             var userAccount = createUserDto.ToUserAccountFromCreateUserDto();
-            await _userAccountRepository.CreateAsync(userAccount);
+            await _userAccountRepo.CreateAsync(userAccount);
             return CreatedAtAction(nameof(GetUserAccount), new { id = userAccount.Id }, userAccount.ToUserAccountDto());
         }
 
@@ -58,7 +59,7 @@ namespace API.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAccountRequestDto updateDto)
         {
-            var userAccount = await _context.UserAccounts.FirstOrDefaultAsync(x => x.Id == id);
+            var userAccount = await _userAccountRepo.UpdateAsync(id, updateDto);
             if (userAccount == null)
             {
                 return NotFound();
@@ -68,9 +69,6 @@ namespace API.Controllers
             // userAccount.Password = updateAccountRequestDto.Password;
 
             //Automatic Mapping
-            _context.Entry(userAccount).CurrentValues.SetValues(updateDto);
-            _context.UserAccounts.Update(userAccount);
-            await _context.SaveChangesAsync();
             return Ok(userAccount.ToUserAccountDto());
         }
 
@@ -78,7 +76,7 @@ namespace API.Controllers
         [Route("{id}")] 
         public async Task<IActionResult> Delete(int id)
         {
-            var userAccount = await _userAccountRepository.DeleteAsync(id);
+            var userAccount = await _userAccountRepo.DeleteAsync(id);
             if (userAccount == null)
             {
                 return NotFound();

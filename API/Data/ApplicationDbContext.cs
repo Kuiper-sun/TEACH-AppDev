@@ -17,5 +17,12 @@ namespace API.Data
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<SchoolResource> SchoolResources { get; set; }
         public DbSet<SchoolTask> SchoolTasks { get; set; }
+
+
+        //Customization
+        // protected override void OModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     base.OnModelCreating(modelBuilder);
+        // }
     }
 }

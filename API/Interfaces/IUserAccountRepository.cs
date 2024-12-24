@@ -15,5 +15,7 @@ namespace API.Interfaces
         Task<UserAccount?> UpdateAsync(int id, UpdateAccountRequestDto updateDto);
 
         Task<UserAccount?> DeleteAsync(int id);
+
+        Task<bool> UserAccountExistsAsync(int id);
     }
 }
