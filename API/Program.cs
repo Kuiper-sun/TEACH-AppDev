@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUserAccountRepository, UserAccountRepository>();
 builder.Services.AddScoped<ISchoolTaskRepository, SchoolTaskRepository>();
+builder.Services.AddScoped<ISchoolResourceRepository, SchoolResourceRepository>();
 
 var app = builder.Build();
 

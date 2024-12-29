@@ -16,7 +16,7 @@ namespace API.Mappers
                 FullName = userAccount.FullName,
                 Email = userAccount.Email,
                 Password = userAccount.Password,
-                SchoolResources = userAccount.SchoolResources,
+                SchoolResources = userAccount.SchoolResources.Select(resource => resource.ToSchoolResourceDto()).ToList(),
                 SchoolTasks = userAccount.SchoolTasks.Select(task => task.ToSchoolTaskDto()).ToList()
             };
         }

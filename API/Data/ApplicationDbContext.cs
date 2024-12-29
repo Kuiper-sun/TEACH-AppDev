@@ -20,9 +20,17 @@ namespace API.Data
 
 
         //Customization
-        // protected override void OModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     base.OnModelCreating(modelBuilder);
-        // }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserAccount>()
+            .HasMany(u => u.SchoolResources)
+            .WithOne(r => r.UserAccount)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserAccount>()
+            .HasMany(u => u.SchoolTasks)
+            .WithOne(t => t.UserAccount)
+            .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
