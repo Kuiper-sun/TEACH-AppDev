@@ -17,7 +17,10 @@ namespace API.Data
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<SchoolResource> SchoolResources { get; set; }
         public DbSet<SchoolTask> SchoolTasks { get; set; }
-
+        public DbSet<TemplateType> TemplateTypes { get; set; }
+        public DbSet<LessonPlanLayout> LessonPlanLayouts { get; set; }
+        public DbSet<DailyLessonLogLayout> DailyLessonLogLayouts { get; set; }
+        public DbSet<DailyTimeRecordLayout> DailyTimeRecordLayouts { get; set; }
 
         //Customization
         protected override void OnModelCreating(ModelBuilder modelBuilder)
