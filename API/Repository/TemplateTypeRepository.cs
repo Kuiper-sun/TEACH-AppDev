@@ -42,6 +42,7 @@ namespace API.Repository
             return await _context.TemplateTypes
                     .Include(l => l.LessonPlanLayouts)
                     .Include(l => l.DailyLessonLogLayouts)
+                    .Include(t => t.DailyTimeRecordLayout)
                     .ToListAsync();
         }
 
@@ -50,6 +51,7 @@ namespace API.Repository
             var templateType = await _context.TemplateTypes
                                 .Include(l =>l.LessonPlanLayouts)
                                 .Include(l => l.DailyLessonLogLayouts)
+                                .Include(t => t.DailyTimeRecordLayout)
                                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if(templateType == null)

@@ -27,7 +27,7 @@ builder.Services.AddScoped<ISchoolResourceRepository, SchoolResourceRepository>(
 builder.Services.AddScoped<ITemplateTypeRepository, TemplateTypeRepository>();
 builder.Services.AddScoped<ILessonPlanLayoutRepository, LessonPlanLayoutRepository>();
 builder.Services.AddScoped<IDailyLessonLogLayoutRepository, DailyLessonLogLayoutRepository>();
-
+builder.Services.AddScoped<IDailyTimeRecordLayout, DailyTimeRecordLayoutRepository>();
 
 
 var app = builder.Build();
