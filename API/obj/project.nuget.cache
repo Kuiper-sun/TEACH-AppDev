@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "45SlGcJ33Hk=",
+  "dgSpecHash": "A4ONkFoCgxQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Papa\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Papa\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

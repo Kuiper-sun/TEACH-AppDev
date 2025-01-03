@@ -14,7 +14,8 @@ namespace API.Mappers
             return new TemplateTypeDto
             {
                 Id = templateType.Id,
-                TemplateName = templateType.TemplateName
+                TemplateName = templateType.TemplateName,
+                LessonPlans = templateType.LessonPlanLayouts.Select(l => l.tolessonPlanDto()).ToList()
             };
         }
 

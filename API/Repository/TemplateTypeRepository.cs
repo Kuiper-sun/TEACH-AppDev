@@ -39,12 +39,16 @@ namespace API.Repository
 
         public async Task<List<TemplateType>> GetAllTemplateTypesAsync()
         {
-            return await _context.TemplateTypes.ToListAsync();
+            return await _context.TemplateTypes
+                    .Include(l => l.LessonPlanLayouts)
+                    .ToListAsync();
         }
 
         public async Task<TemplateType?> GetTemplateTypeByIdAsync(int id)
         {
-            var templateType = await _context.TemplateTypes.FirstOrDefaultAsync(x => x.Id == id);
+            var templateType = await _context.TemplateTypes
+                                .Include(l =>l.LessonPlanLayouts)
+                                .FirstOrDefaultAsync(x => x.Id == id);
 
             if(templateType == null)
             {

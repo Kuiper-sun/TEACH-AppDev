@@ -42,7 +42,7 @@ namespace API.Repository
 
         public async Task<UserAccount?> GetByIdAsync(int id)
         {
-            var user = await _context.UserAccounts.Include(t => t.SchoolTasks).FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.UserAccounts.Include(r => r.SchoolResources).Include(t => t.SchoolTasks).FirstOrDefaultAsync(x => x.Id == id);
             if(user == null)
             {
                 return null;
@@ -53,7 +53,7 @@ namespace API.Repository
 
         public async Task<List<UserAccount>> GetUserAccountsAsync()
         {
-            return await _context.UserAccounts.Include(t => t.SchoolTasks).ToListAsync();
+            return await _context.UserAccounts.Include(r => r.SchoolResources).Include(t => t.SchoolTasks).ToListAsync();
         }
 
         public async Task<UserAccount?> UpdateAsync(int id, UpdateAccountRequestDto updateDto)
