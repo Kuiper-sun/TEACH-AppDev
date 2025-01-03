@@ -25,6 +25,7 @@ builder.Services.AddScoped<IUserAccountRepository, UserAccountRepository>();
 builder.Services.AddScoped<ISchoolTaskRepository, SchoolTaskRepository>();
 builder.Services.AddScoped<ISchoolResourceRepository, SchoolResourceRepository>();
 builder.Services.AddScoped<ITemplateTypeRepository, TemplateTypeRepository>();
+builder.Services.AddScoped<ILessonPlanLayoutRepository, LessonPlanLayoutRepository>();
 
 var app = builder.Build();
 

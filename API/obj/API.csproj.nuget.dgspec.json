@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj": {}
+    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj": {
+    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj",
+        "projectPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Papa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\obj\\",
+        "outputPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Papa\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -75,5 +75,19 @@ namespace API.Controllers
 
             return Ok(resource.ToSchoolResourceDto());
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        // DELETE: api/Resources/5
+        public async Task<IActionResult> DeleteResource([FromRoute] int id)
+        {
+            var resource = await _resourceRepo.DeleteAsync(id);
+            if (resource == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
