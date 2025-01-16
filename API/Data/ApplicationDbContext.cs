@@ -25,6 +25,7 @@ namespace API.Data
         //Customization
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // UserAccount -> SchoolResource, SchoolTask
             modelBuilder.Entity<UserAccount>()
             .HasMany(u => u.SchoolResources)
             .WithOne(r => r.UserAccount)
@@ -34,6 +35,23 @@ namespace API.Data
             .HasMany(u => u.SchoolTasks)
             .WithOne(t => t.UserAccount)
             .OnDelete(DeleteBehavior.Cascade);
+
+            // TemplateType -> LessonPlanLayout, DailyLessonLogLayout, DailyTimeRecordLayout
+            modelBuilder.Entity<TemplateType>()
+            .HasMany(t => t.LessonPlanLayouts)
+            .WithOne(l => l.TemplateType)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TemplateType>()
+            .HasMany(t => t.DailyLessonLogLayouts)
+            .WithOne(l => l.TemplateType)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TemplateType>()
+            .HasMany(t => t.DailyTimeRecordLayouts)
+            .WithOne(l => l.TemplateType)
+            .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

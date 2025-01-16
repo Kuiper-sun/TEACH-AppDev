@@ -12,6 +12,6 @@ namespace API.Model
 
         public List<LessonPlanLayout> LessonPlanLayouts {get; set;} = new List<LessonPlanLayout>();
         public List<DailyLessonLogLayout> DailyLessonLogLayouts {get; set;} = new List<DailyLessonLogLayout>();
-        public List<DailyTimeRecordLayout> DailyTimeRecordLayout {get; set;} = new List<DailyTimeRecordLayout>();
+        public List<DailyTimeRecordLayout> DailyTimeRecordLayouts {get; set;} = new List<DailyTimeRecordLayout>();
     }
 }

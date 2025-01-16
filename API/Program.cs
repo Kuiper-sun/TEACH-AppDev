@@ -2,6 +2,7 @@ using API.Data;
 using API.Interfaces;
 using API.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,13 @@ builder.Services.AddScoped<ITemplateTypeRepository, TemplateTypeRepository>();
 builder.Services.AddScoped<ILessonPlanLayoutRepository, LessonPlanLayoutRepository>();
 builder.Services.AddScoped<IDailyLessonLogLayoutRepository, DailyLessonLogLayoutRepository>();
 builder.Services.AddScoped<IDailyTimeRecordLayout, DailyTimeRecordLayoutRepository>();
-
+ 
+// builder.Services.AddCors(
+//     options => 
+//     {
+//         options.AddPolicy();
+//     }
+// );
 
 var app = builder.Build();
 
