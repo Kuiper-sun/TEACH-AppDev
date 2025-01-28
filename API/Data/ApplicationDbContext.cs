@@ -14,6 +14,11 @@ namespace API.Data
             
         }
 
+
+        //Join Table
+        public DbSet<UserTemplateJoin> UserTemplateJoins { get; set; }
+
+        //Main Tables
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<SchoolResource> SchoolResources { get; set; }
         public DbSet<SchoolTask> SchoolTasks { get; set; }
@@ -24,7 +29,23 @@ namespace API.Data
 
         //Customization
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {   
+            base.OnModelCreating(modelBuilder);
+
+            // UserTemplateJoin -> UserAccount, TemplateType
+            modelBuilder.Entity<UserTemplateJoin>(x => x.HasKey(p => new { p.UserId, p.TemplateId }));
+
+            modelBuilder.Entity<UserTemplateJoin>()
+             .HasOne(u => u.UserAccount)
+             .WithMany(t => t.UserTemplateJoins)
+             .HasForeignKey(u => u.UserId);
+
+            modelBuilder.Entity<UserTemplateJoin>()
+             .HasOne(u => u.templateType)
+             .WithMany(t => t.UserTemplateJoins)
+             .HasForeignKey(u => u.TemplateId);
+
+
             // UserAccount -> SchoolResource, SchoolTask
             modelBuilder.Entity<UserAccount>()
             .HasMany(u => u.SchoolResources)

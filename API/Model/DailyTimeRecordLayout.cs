@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Model
 {
+    [Table("DailyTimeRecordLayout")]
     public class DailyTimeRecordLayout
     {
         public int Id { get; set; }

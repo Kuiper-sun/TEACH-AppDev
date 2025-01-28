@@ -29,13 +29,9 @@ builder.Services.AddScoped<ITemplateTypeRepository, TemplateTypeRepository>();
 builder.Services.AddScoped<ILessonPlanLayoutRepository, LessonPlanLayoutRepository>();
 builder.Services.AddScoped<IDailyLessonLogLayoutRepository, DailyLessonLogLayoutRepository>();
 builder.Services.AddScoped<IDailyTimeRecordLayout, DailyTimeRecordLayoutRepository>();
- 
-// builder.Services.AddCors(
-//     options => 
-//     {
-//         options.AddPolicy();
-//     }
-// );
+builder.Services.AddScoped<IUserTemplateJoin, UserTemplateJoinRepository>();
+
+
 
 var app = builder.Build();
 
@@ -47,6 +43,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(x => x
+ .AllowAnyMethod()
+ .AllowAnyHeader()
+ .WithOrigins("http://127.0.0.1:5500/TestAPI") // Remove final slash in the URL to avoid errors use the format "http://localhost:3000" instead of "http://localhost:3000/"
+ .SetIsOriginAllowed(origin => true)
+ );
 
 app.UseAuthorization();
 

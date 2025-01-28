@@ -146,3 +146,6 @@ C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\api\bin\Debug\net8.0\Micros
 C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\api\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\api\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\api\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\bin\Debug\net8.0\API.staticwebassets.endpoints.json
+C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props

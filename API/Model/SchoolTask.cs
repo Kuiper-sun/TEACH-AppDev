@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Model
 {
+    [Table("SchoolTask")]
     public class SchoolTask
     {
         public int Id { get; set; }
