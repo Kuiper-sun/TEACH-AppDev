@@ -20,6 +20,8 @@ import TaskScheduler from './pages/TaskScheduler';
 import DailyTimeRecord from './pages/DailyTimeRecord';
 import Activities from './pages/Activities';
 import ActivitiesViewer from './pages/ActivitiesViewer';
+import Videos from './pages/Videos';
+import VideosViewer from './pages/VideosViewer';
 
 
 function App() {
@@ -55,6 +57,9 @@ function App() {
 
         <Route path="/activities" element={<Activities />} />
         <Route path="/activities/:activityId" element={<ActivitiesViewer />} />
+
+        <Route path="/videos" element={<Videos />} />
+        <Route path="/videos/:videoId" element={<VideosViewer />} />
       </Routes>
     </Router>
   );

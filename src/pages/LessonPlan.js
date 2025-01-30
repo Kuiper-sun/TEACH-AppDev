@@ -86,7 +86,7 @@ const LessonPlan = () => {
                 <div className="flex justify-between items-center mb-8">
                     <div>
                         <h1 className="text-2xl font-bold">Lesson Plan</h1>
-                        <p className="text-gray-600 mt-1">Create a lesson plan in no time! Simply enter the required information and export as a PDF—no editing or formatting needed.</p>
+                        <p className="text-gray-600 mt-1">Create a lesson plan in no time! Simply enter the required information and export as a docx file—no editing or formatting needed.</p>
                     </div>
                     <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                         Export Layout
