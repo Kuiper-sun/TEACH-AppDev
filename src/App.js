@@ -15,6 +15,9 @@ import Modules from './pages/Modules';
 import ModuleViewer from './pages/ModuleViewer';
 import StudentProgress from './pages/StudentProgress';
 import AddStudentDataForm from './pages/AddStudentDataForm';
+import DailyLessonLog from './pages/DailyLessonLog'; 
+import TaskScheduler from './pages/TaskScheduler';
+import DailyTimeRecord from './pages/DailyTimeRecord';
 
 
 function App() {
@@ -22,12 +25,12 @@ function App() {
     <Router>
       <Routes>
         {/* Auth & Public Routes */}
+        <Route path="/" element={<CreateAccount />} /> {/* Default route updated */}
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Protected Routes */}
-        <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/settings" element={<Settings />} />
@@ -36,14 +39,17 @@ function App() {
         {/* Document Routes */}
         <Route path="/document-layout" element={<DocumentLayout />} />
         <Route path="/lesson-plan" element={<LessonPlan />} />
+        <Route path="/daily-lesson-log" element={<DailyLessonLog />} />
         
         {/* Resource Routes */}
         <Route path="/resources" element={<Resources />} />
         <Route path="/modules" element={<Modules />} />
+        <Route path="/task-scheduler" element={<TaskScheduler />} />
+        <Route path="/daily-time-record" element={<DailyTimeRecord />} />
         {/* Update module viewer route to accept dynamic module ID */}
         <Route path="/modules/:moduleId" element={<ModuleViewer />} />
         <Route path="/student-progress" element={<StudentProgress />} />
-        <Route path="/add-student-data" element={<AddStudentDataForm />} />
+        <Route path="/add-student" element={<AddStudentDataForm />} />
       </Routes>
     </Router>
   );

@@ -4,6 +4,7 @@ import { Bell, Home, Settings, Search, LogOut } from 'lucide-react'; // Import L
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    
 
     const handleFeatureClick = (route) => {
         navigate(route);
@@ -52,7 +53,13 @@ const Dashboard = () => {
             title: "Task Scheduler",
             route: "/task-scheduler",
             description: "Efficiently schedule administrative tasks for teachers by considering available time slots, task duration, and priority levels, with notification reminders."
-        }
+        },
+        { 
+            title: "Daily Time Record", 
+            route: "/daily-time-record",
+            description: "Streamline time tracking and attendance management. It offers an intuitive interface to record, monitor, and analyze daily work hours",
+            gradient: "from-blue-400 via-indigo-400 to-purple-500"
+        },
     ];
 
     return (

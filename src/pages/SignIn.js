@@ -116,7 +116,7 @@ const SignIn = () => {
                         <span className="text-gray-700">Don't have an account? </span>
                         <button
                             type="button"
-                            onClick={() => navigate('/signup')}
+                            onClick={() => navigate('/create-account')}
                             className="text-blue-600 hover:text-blue-700"
                         >
                             Sign Up

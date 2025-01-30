@@ -102,10 +102,7 @@ const Resources = () => {
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-2xl font-bold">Resources</h1>
                     <div className="flex items-center space-x-4">
-                        <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            <Upload className="h-4 w-4 mr-2" />
-                            Upload File
-                        </button>
+
                         <div className="relative">
                             <input 
                                 type="text"
