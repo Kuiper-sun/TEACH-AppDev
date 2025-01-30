@@ -14,5 +14,7 @@ namespace API.Interfaces
         public Task<LessonPlanLayout> CreateAsync(LessonPlanLayout lessonPlanLayout);
         public Task<LessonPlanLayout?> DeleteAsync(int id);
         public Task<LessonPlanLayout?> UpdateAsync(int id, UpdateLessonPlanRequestDto lessonPlanUpdate);
+
+        public Task<LessonPlanContentDto> GetLessonPlanContent(int userId, int lessonPlanId, int templateId);
     }
 }

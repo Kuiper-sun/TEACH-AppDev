@@ -1,6 +1,7 @@
 using API.Data;
 using API.Interfaces;
 using API.Repository;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped<ILessonPlanLayoutRepository, LessonPlanLayoutReposito
 builder.Services.AddScoped<IDailyLessonLogLayoutRepository, DailyLessonLogLayoutRepository>();
 builder.Services.AddScoped<IDailyTimeRecordLayout, DailyTimeRecordLayoutRepository>();
 builder.Services.AddScoped<IUserTemplateJoin, UserTemplateJoinRepository>();
+builder.Services.AddScoped<IWordFileGeneratorService, WordFileGenerator>(); 
 
 
 

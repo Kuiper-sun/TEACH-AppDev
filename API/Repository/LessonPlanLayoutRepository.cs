@@ -49,6 +49,8 @@ namespace API.Repository
             return await _context.LessonPlanLayouts.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+
+
         public async Task<LessonPlanLayout?> UpdateAsync(int id, UpdateLessonPlanRequestDto lessonPlanUpdate)
         {
             var lessonPlan = await _context.LessonPlanLayouts.FirstOrDefaultAsync(x => x.Id == id);
@@ -61,6 +63,34 @@ namespace API.Repository
             _context.Entry(lessonPlan).CurrentValues.SetValues(lessonPlanUpdate);
             await _context.SaveChangesAsync();
             return lessonPlan;
+        }
+        public async Task<LessonPlanContentDto> GetLessonPlanContent(int userId, int lessonPlanId, int templateId)
+        {
+            var lessonData = await _context.LessonPlanLayouts
+                .Where(lp => lp.Id == lessonPlanId) // Filter LessonPlanLayouts by lessonPlanId
+                .Join(
+                    _context.UserTemplateJoins.Where(utj => utj.UserId == userId && utj.TemplateId == templateId), // Filter UserTemplateJoins
+                    lp => lp.TemplateTypeId, // Match LessonPlanLayout.TemplateTypeId
+                    utj => utj.TemplateId,   // Match UserTemplateJoin.TemplateId
+                    (lp, utj) => lp          // Select the LessonPlanLayout object
+                )
+                .Select(lp => new LessonPlanContentDto
+                {
+                    GradeLevel = lp.GradeLevel,
+                    Subject = lp.Subject,
+                    Objectives = lp.Objectives,
+                    Assessment = lp.Assessment,
+                    Procedure = lp.Procedure,
+                    Assignment = lp.Assignment,
+                    SubjectMatter = lp.SubjectMatter
+                })
+                .FirstOrDefaultAsync();
+
+            if (lessonData == null)
+            {
+                return null;
+            }
+            return lessonData;
         }
     }
 }

@@ -15,10 +15,13 @@ namespace API.Controllers
     {
         private readonly ILessonPlanLayoutRepository _lessonPlanLayoutRepo;
         private readonly ITemplateTypeRepository _templateTypeRepo;
-        public LessonPlanLayoutController(ILessonPlanLayoutRepository lessonPlanLayoutRepo, ITemplateTypeRepository templateTypeRepo)
+        private readonly IWordFileGeneratorService _wordFileGen;
+        public LessonPlanLayoutController(ILessonPlanLayoutRepository lessonPlanLayoutRepo, ITemplateTypeRepository templateTypeRepo, IWordFileGeneratorService wordFileGen)
         {
             _lessonPlanLayoutRepo = lessonPlanLayoutRepo;
             _templateTypeRepo = templateTypeRepo;
+            _wordFileGen = wordFileGen;
+
         }
 
         [HttpGet]
@@ -78,6 +81,29 @@ namespace API.Controllers
             }
 
             return Ok(lessonPlan.tolessonPlanDto());
+        }
+
+        [HttpGet]
+        [Route("{userId}/{lessonPlanId}/{templateId}")]
+        public async Task<IActionResult> GetLessonPlanContent([FromRoute] int userId, [FromRoute] int lessonPlanId, [FromRoute] int templateId)
+        {
+            var lessonPlanContent = await _lessonPlanLayoutRepo.GetLessonPlanContent(userId, lessonPlanId, templateId);
+
+            if(lessonPlanContent == null)
+            {
+                return NotFound();
+            }
+            
+            try
+            {
+                var wordStream = await _wordFileGen.GenerateLessonPlanWordFile(userId, lessonPlanId, templateId);
+                return File(wordStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "LessonPlanGen.docx");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

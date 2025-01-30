@@ -149,3 +149,6 @@ C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\api\bin\Debug\net8.0\Newton
 C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\bin\Debug\net8.0\API.staticwebassets.endpoints.json
 C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\Papa\Desktop\Code\ADET - Teach\TEACH-AppDev\API\bin\Debug\net8.0\System.IO.Packaging.dll
