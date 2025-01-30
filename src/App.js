@@ -18,6 +18,8 @@ import AddStudentDataForm from './pages/AddStudentDataForm';
 import DailyLessonLog from './pages/DailyLessonLog'; 
 import TaskScheduler from './pages/TaskScheduler';
 import DailyTimeRecord from './pages/DailyTimeRecord';
+import Activities from './pages/Activities';
+import ActivitiesViewer from './pages/ActivitiesViewer';
 
 
 function App() {
@@ -50,6 +52,9 @@ function App() {
         <Route path="/modules/:moduleId" element={<ModuleViewer />} />
         <Route path="/student-progress" element={<StudentProgress />} />
         <Route path="/add-student" element={<AddStudentDataForm />} />
+
+        <Route path="/activities" element={<Activities />} />
+        <Route path="/activities/:activityId" element={<ActivitiesViewer />} />
       </Routes>
     </Router>
   );

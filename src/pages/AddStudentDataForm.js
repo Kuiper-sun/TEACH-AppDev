@@ -103,9 +103,16 @@ const AddStudentDataForm = () => {
                     onChange={(e) => handleInputChange('subject', e.target.value)}
                   >
                     <option value="">Select Subject</option>
-                    <option value="math">Mathematics</option>
-                    <option value="science">Science</option>
-                    <option value="english">English</option>
+                    <option value="">Mother Tongue</option>
+                    <option value="">Filipino</option>
+                    <option value="">English</option>
+                    <option value="">Mathematics</option>
+                    <option value="">Science</option>
+                    <option value="">Araling Panlipunan</option>
+                    <option value="">Edukasyon sa Pagpapakatao (ESP)</option>
+                    <option value="">MAPEH</option>
+                    <option value="">Edukasyong Pantahanan at Panglabuhayan (EPP)</option>
+                    <option value="">Technology and Livelihood Education (TLE)</option>
                   </select>
                   <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 </div>
@@ -129,15 +136,22 @@ const AddStudentDataForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Section</label>
-                <input
-                  type="text"
-                  placeholder="Enter Section"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.section}
-                  onChange={(e) => handleInputChange('section', e.target.value)}
-                />
-              </div>
+  <label className="block text-sm font-medium mb-2">Section</label>
+  <div className="relative">
+    <select
+      className="w-full p-3 border rounded-lg appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      value={formData.section}
+      onChange={(e) => handleInputChange('section', e.target.value)}
+    >
+      <option value="">Select Section</option>
+      {[1, 2, 3, 4, 5].map(section => (
+        <option key={section} value={`Section ${section}`}>Section {section}</option>
+      ))}
+    </select>
+    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+  </div>
+</div>
+
             </div>
 
             {/* Personal Information */}

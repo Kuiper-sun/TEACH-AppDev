@@ -190,15 +190,22 @@ const DailyTimeRecord = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">For the month of</label>
-                <input
-                  type="text"
-                  name="month"
-                  value={formData.month}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-lg border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                />
+                  <label className="block text-sm font-medium text-gray-700">For the month of</label>
+                   <div className="relative">
+                <select
+                   name="month"
+                   value={formData.month}
+                   onChange={handleInputChange}
+                   className="mt-1 block w-full rounded-lg border-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                >
+                  <option value="">Select Month</option>
+                   {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map((month, index) => (
+                   <option key={index} value={month}>{month}</option>
+                   ))}
+                </select>
               </div>
+           </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700">Office Hours</label>
                 <input

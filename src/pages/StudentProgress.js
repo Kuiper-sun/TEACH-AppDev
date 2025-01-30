@@ -273,17 +273,22 @@ const StudentProgress = () => {
           </div>
 
           <div className="relative">
-            <select 
-              className="w-full p-2 pl-3 pr-10 border rounded-lg appearance-none bg-white"
-              value={selectedStudent}
-              onChange={(e) => setSelectedStudent(e.target.value)}
-            >
-              <option value="">Select Student</option>
-              <option value="John Doe">John Doe</option>
-              <option value="Jane Smith">Jane Smith</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-4 w-4" />
-          </div>
+        <input
+          list="student-options"
+          className="w-full p-2 pl-3 pr-10 border rounded-lg bg-white"
+          value={selectedStudent}
+          onChange={(e) => setSelectedStudent(e.target.value)}
+          placeholder="Select or Type Student"
+       />
+           <datalist id="student-options">
+            <option value="John Doe" />
+            <option value="Jane Smith" />
+            <option value="Alice Johnson" />
+            <option value="Bob Williams" />
+           </datalist>
+          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-4 w-4" />
+         </div>
+
 
           <div className="relative">
             <select 
@@ -292,9 +297,16 @@ const StudentProgress = () => {
               onChange={(e) => setSelectedSubject(e.target.value)}
             >
               <option value="">Select Subject</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Science">Science</option>
-              <option value="English">English</option>
+              <option value="">Mother Tongue</option>
+              <option value="">Filipino</option>
+              <option value="">English</option>
+              <option value="">Mathematics</option>
+              <option value="">Science</option>
+              <option value="">Araling Panlipunan</option>
+              <option value="">Edukasyon sa Pagpapakatao (ESP)</option>
+              <option value="">MAPEH</option>
+              <option value="">Edukasyong Pantahanan at Panglabuhayan (EPP)</option>
+              <option value="">Technology and Livelihood Education (TLE)</option>
             </select>
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-4 w-4" />
           </div>

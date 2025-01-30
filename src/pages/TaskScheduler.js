@@ -8,41 +8,31 @@ const TaskScheduler = () => {
   const [isCustomizeModalOpen, setIsCustomizeModalOpen] = useState(false);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isReminderModalOpen, setIsReminderModalOpen] = useState(false);
-  const [isDevModeModalOpen, setIsDevModeModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState('week');
-  const [tasks, setTasks] = useState([]);
-  const [scheduledTasks, setScheduledTasks] = useState([]);
-  const [unscheduledTasks, setUnscheduledTasks] = useState([]);
   const [timeRange, setTimeRange] = useState({ start: 8, end: 22 });
   const [selectedCells, setSelectedCells] = useState(new Set());
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectionMode, setSelectionMode] = useState(null);
+  const [scheduledTasks, setScheduledTasks] = useState([]);
+  const [unscheduledTasks, setUnscheduledTasks] = useState([]);
   const [executionTime, setExecutionTime] = useState(null);
-  const [totalFreeTime, setTotalFreeTime] = useState('0 hr and 0 min');
+  const [taskInputs, setTaskInputs] = useState([{
+    name: '',
+    priority: 3,
+    energy: 3,
+    time: 1,
+    color: 'blue'
+  }]);
   const [reminderSettings, setReminderSettings] = useState({
     notification: true,
     time: '10 minutes before'
   });
-  const [taskInputs, setTaskInputs] = useState([
-    { name: '', color: 'blue', priority: 3, time: 1 }
-  ]);
 
-  const handleHomeClick = () => {
-    navigate('/dashboard');
-  };
-
-  const handleNotificationClick = () => {
-    navigate('/notifications');
-  };
-
-  const handleSettingsClick = () => {
-    navigate('/settings');
-  };
-
-  const handleProfileClick = () => {
-    navigate('/profile');
-  };
-
+  // Navigation handlers
+  const handleHomeClick = () => navigate('/dashboard');
+  const handleNotificationClick = () => navigate('/notifications');
+  const handleSettingsClick = () => navigate('/settings');
+  const handleProfileClick = () => navigate('/profile');
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     navigate('/signin');
@@ -54,7 +44,7 @@ const TaskScheduler = () => {
   const intervalsInHour = 2;
 
   const timeSlots = Array.from(
-    { length: (timeRange.end - timeRange.start) * intervalsInHour }, 
+    { length: (timeRange.end - timeRange.start) * intervalsInHour },
     (_, i) => {
       const hour = Math.floor(i / 2) + timeRange.start;
       const minute = i % 2 === 0 ? '00' : '30';
@@ -62,7 +52,19 @@ const TaskScheduler = () => {
     }
   );
 
-  // Task scheduler functions
+  // Get color based on priority level
+  const getTaskColor = (priority) => {
+    const colors = {
+      1: 'bg-gray-200',
+      2: 'bg-blue-200',
+      3: 'bg-green-200',
+      4: 'bg-yellow-200',
+      5: 'bg-red-200'
+    };
+    return colors[priority] || colors[3];
+  };
+
+  // Mouse event handlers for cell selection
   const handleMouseDown = (cellId) => {
     setIsSelecting(true);
     setSelectionMode(!selectedCells.has(cellId));
@@ -91,15 +93,27 @@ const TaskScheduler = () => {
     setSelectedCells(newSelectedCells);
   };
 
-  const updateTotalFreeTime = () => {
+  // Calculate and format total free time
+  const getTotalFreeTime = useCallback(() => {
     const totalSlots = selectedCells.size;
     const hours = Math.floor(totalSlots / 2);
     const minutes = (totalSlots % 2) * 30;
-    setTotalFreeTime(`${hours} hr and ${minutes} min`);
+    return `${hours}h ${minutes}m`;
+  }, [selectedCells]);
+
+  const updateTotalFreeTime = () => {
+    getTotalFreeTime();
   };
 
+  // Task management functions
   const addTaskInput = () => {
-    setTaskInputs([...taskInputs, { name: '', color: 'blue', priority: 3, time: 1 }]);
+    setTaskInputs([...taskInputs, { 
+      name: '', 
+      priority: 3, 
+      energy: 3, 
+      time: 1, 
+      color: 'blue'
+    }]);
   };
 
   const updateTaskInput = (index, field, value) => {
@@ -108,24 +122,34 @@ const TaskScheduler = () => {
     setTaskInputs(newTaskInputs);
   };
 
-  const generateSchedule = () => {
+  // Enhanced schedule generation with optimization criteria
+  const generateSchedule = (optimizationCriterion = 'priority') => {
     const startTime = performance.now();
-    const validTasks = taskInputs.filter(task => task.name.trim() !== '');
-    const sortedTasks = [...validTasks].sort((a, b) => b.priority - a.priority);
     
-    let remainingCells = Array.from(selectedCells);
+    // Filter out empty task inputs
+    const validTasks = taskInputs.filter(task => task.name.trim() !== '');
+    
+    // Sort tasks by priority or energy score
+    const sortedTasks = [...validTasks].sort((a, b) => {
+      const scoreA = optimizationCriterion === 'priority' ? a.priority : a.energy;
+      const scoreB = optimizationCriterion === 'priority' ? b.priority : b.energy;
+      return scoreB - scoreA;
+    });
+
+    const availableCells = Array.from(selectedCells);
     const scheduled = [];
     const unscheduled = [];
 
+    // Schedule tasks based on available time slots
     sortedTasks.forEach(task => {
-      const requiredSlots = task.time * 2;
-      if (remainingCells.length >= requiredSlots) {
-        const taskSlots = remainingCells.slice(0, requiredSlots);
+      const requiredSlots = task.time * 2; // Convert hours to 30-minute slots
+      if (availableCells.length >= requiredSlots) {
+        const assignedSlots = availableCells.splice(0, requiredSlots);
         scheduled.push({
           ...task,
-          slots: taskSlots
+          slots: assignedSlots,
+          color: getTaskColor(task.priority)
         });
-        remainingCells = remainingCells.slice(requiredSlots);
       } else {
         unscheduled.push(task);
       }
@@ -133,7 +157,6 @@ const TaskScheduler = () => {
 
     const endTime = performance.now();
     setExecutionTime(endTime - startTime);
-
     setScheduledTasks(scheduled);
     setUnscheduledTasks(unscheduled);
     setIsAddTaskModalOpen(false);
@@ -143,10 +166,16 @@ const TaskScheduler = () => {
     setSelectedCells(new Set());
     setScheduledTasks([]);
     setUnscheduledTasks([]);
-    setTaskInputs([{ name: '', color: 'blue', priority: 3, time: 1 }]);
-    setTotalFreeTime('0 hr and 0 min');
+    setTaskInputs([{ 
+      name: '', 
+      priority: 3, 
+      energy: 3, 
+      time: 1, 
+      color: 'blue' 
+    }]);
   };
 
+  // Rest of the JSX remains the same as in your first code
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
@@ -192,7 +221,7 @@ const TaskScheduler = () => {
             className="w-10 h-10 rounded-full bg-gray-300"
           />
           <div className="ml-3 text-white">
-            <div className="font-medium">Pamela Golosinda</div>
+            <div className="font-medium">User Profile</div>
             <div className="text-sm text-gray-300">Profile</div>
           </div>
         </div>
@@ -256,7 +285,7 @@ const TaskScheduler = () => {
             <h1 className="text-2xl font-bold text-gray-900">Task Scheduler</h1>
             <p className="text-gray-500">Schedule and manage your tasks efficiently</p>
             <p className="text-sm text-gray-500 mt-2">
-              Total Free Time: {totalFreeTime}
+              Total Free Time: {getTotalFreeTime()}
             </p>
             {executionTime && (
               <p className="text-sm text-gray-500">
@@ -300,7 +329,7 @@ const TaskScheduler = () => {
             </div>
 
             {/* Time Slots */}
-            <div className="grid grid-cols-8 gap-4 mb-4">
+            <div className="grid grid-cols-8 gap-4">
               <div className="text-sm font-medium text-gray-500"></div>
               {displayDays.map((day, index) => (
                 <div key={index} className="text-center">
@@ -326,7 +355,7 @@ const TaskScheduler = () => {
                         border-l border-gray-100 py-4 px-2 min-h-[60px] cursor-pointer
                         transition-colors duration-200
                         ${isSelected ? 'bg-blue-100' : ''}
-                        ${scheduledTask ? `bg-${scheduledTask.color}-500 text-white` : ''}
+                        ${scheduledTask ? `${scheduledTask.color} text-white` : ''}
                       `}
                       onMouseDown={() => handleMouseDown(cellId)}
                       onMouseOver={() => handleMouseOver(cellId)}
@@ -404,22 +433,7 @@ const TaskScheduler = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Color
-                    </label>
-                    <select
-                      value={task.color}
-                      onChange={(e) => updateTaskInput(index, 'color', e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="blue">Blue</option>
-                      <option value="green">Green</option>
-                      <option value="orange">Orange</option>
-                      <option value="purple">Purple</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Priority Level
+                      Priority (1-5)
                     </label>
                     <input
                       type="number"
@@ -427,6 +441,19 @@ const TaskScheduler = () => {
                       max="5"
                       value={task.priority}
                       onChange={(e) => updateTaskInput(index, 'priority', parseInt(e.target.value))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Energy (1-5)
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="5"
+                      value={task.energy}
+                      onChange={(e) => updateTaskInput(index, 'energy', parseInt(e.target.value))}
                       className="w-full p-2 border border-gray-300 rounded-md"
                     />
                   </div>
@@ -447,19 +474,28 @@ const TaskScheduler = () => {
               ))}
             </div>
 
-            <div className="mt-4 space-x-2">
+            <div className="mt-6 flex justify-between">
               <button
                 onClick={addTaskInput}
-                className="px-4 py-2 text-blue-600 hover:text-blue-700"
+                className="text-blue-600 hover:text-blue-700"
               >
                 Add Another Task
               </button>
-              <button
-                onClick={generateSchedule}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              >
-                Generate Schedule
-              </button>
+              <div className="space-x-2">
+                <select
+                  onChange={(e) => generateSchedule(e.target.value)}
+                  className="p-2 border rounded-md"
+                >
+                  <option value="priority">Optimize by Priority</option>
+                  <option value="energy">Optimize by Energy</option>
+                </select>
+                <button
+                  onClick={() => generateSchedule('priority')}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                  Generate Schedule
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -576,9 +612,7 @@ const TaskScheduler = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={() => {
-                    setIsReminderModalOpen(false);
-                  }}
+                  onClick={() => setIsReminderModalOpen(false)}
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 >
                   Set
@@ -596,7 +630,7 @@ const TaskScheduler = () => {
           <ul className="space-y-2">
             {unscheduledTasks.map((task, index) => (
               <li key={index} className="text-sm text-gray-600">
-                {task.name} (Priority: {task.priority}, Time: {task.time}h)
+                {task.name} (Priority: {task.priority}, Energy: {task.energy}, Time: {task.time}h)
               </li>
             ))}
           </ul>

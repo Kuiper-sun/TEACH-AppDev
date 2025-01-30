@@ -86,7 +86,7 @@ const DailyLessonLog = () => {
                 <div className="flex justify-between items-center mb-8">
                     <div>
                         <h1 className="text-2xl font-bold">Daily Lesson Log</h1>
-                        <p className="text-gray-600 mt-1">Create Daily Lesson Log in no time! Simply enter the required information and export as a PDF—no editing or formatting needed.</p>
+                        <p className="text-gray-600 mt-1">Create Daily Lesson Log in no time! Simply enter the required information and export as a docx file—no editing or formatting needed.</p>
                     </div>
                     <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                         Export Layout
@@ -106,11 +106,18 @@ const DailyLessonLog = () => {
                             />
                         </div>
 
+                        
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Grade Level</label>
-                            <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="">Select an option</option>
-                            </select>
+                           <label className="block text-sm font-medium text-gray-700 mb-1">Grade Level</label>
+                           <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                 <option value="">Select an option</option>
+                                 <option value="grade1">Grade 1</option>
+                                 <option value="grade2">Grade 2</option>
+                                 <option value="grade3">Grade 3</option>
+                                 <option value="grade4">Grade 4</option>
+                                 <option value="grade5">Grade 5</option>
+                                 <option value="grade6">Grade 6</option>
+                           </select>
                         </div>
 
                         <div>
@@ -126,6 +133,16 @@ const DailyLessonLog = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-1">Learning Area</label>
                             <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Select an option</option>
+                                <option value="">Mother Tongue</option>
+                                <option value="">Filipino</option>
+                                <option value="">English</option>
+                                <option value="">Mathematics</option>
+                                <option value="">Science</option>
+                                <option value="">Araling Panlipunan</option>
+                                <option value="">Edukasyon sa Pagpapakatao (ESP)</option>
+                                <option value="">MAPEH</option>
+                                <option value="">Edukasyong Pantahanan at Panglabuhayan (EPP)</option>
+                                <option value="">Technology and Livelihood Education (TLE)</option>
                             </select>
                         </div>
 
@@ -142,6 +159,10 @@ const DailyLessonLog = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-1">Quarter</label>
                             <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Select an option</option>
+                                <option value="">Quarter 1</option>
+                                <option value="">Quarter 2</option>
+                                <option value="">Quarter 3</option>
+                                <option value="">Quarter 4</option>
                             </select>
                         </div>
                     </div>
@@ -158,16 +179,8 @@ const DailyLessonLog = () => {
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Objectives</label>
                                 <textarea 
-                                    placeholder="Input the first objective for this lesson plan"
+                                    placeholder="Input the objective for this lesson plan"
                                     className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24 mb-2"
-                                />
-                                <textarea 
-                                    placeholder="Input the second objective for this lesson plan"
-                                    className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24 mb-2"
-                                />
-                                <textarea 
-                                    placeholder="Input the third objective for this lesson plan"
-                                    className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24"
                                 />
                             </div>
 

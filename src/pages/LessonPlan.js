@@ -98,26 +98,33 @@ const LessonPlan = () => {
                 <form className="space-y-6">
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Lesson Format</label>
-                            <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="">Select an option</option>
-                            </select>
-                        </div>
-
-                        <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Grade Level</label>
                             <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Select an option</option>
+                                 <option value="grade1">Grade 1</option>
+                                 <option value="grade2">Grade 2</option>
+                                 <option value="grade3">Grade 3</option>
+                                 <option value="grade4">Grade 4</option>
+                                 <option value="grade5">Grade 5</option>
+                                 <option value="grade6">Grade 6</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                            <input 
-                                type="text"
-                                placeholder="Input the subject for this lesson plan"
-                                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            />
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Learning Area</label>
+                            <select className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select an option</option>
+                                <option value="">Mother Tongue</option>
+                                <option value="">Filipino</option>
+                                <option value="">English</option>
+                                <option value="">Mathematics</option>
+                                <option value="">Science</option>
+                                <option value="">Araling Panlipunan</option>
+                                <option value="">Edukasyon sa Pagpapakatao (ESP)</option>
+                                <option value="">MAPEH</option>
+                                <option value="">Edukasyong Pantahanan at Panglabuhayan (EPP)</option>
+                                <option value="">Technology and Livelihood Education (TLE)</option>
+                            </select>
                         </div>
 
                         <div>
@@ -131,17 +138,10 @@ const LessonPlan = () => {
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Objectives</label>
                             <textarea 
-                                placeholder="Input the first objective for this lesson plan"
+                                placeholder="Input the objective for this lesson plan"
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24 mb-2"
                             />
-                            <textarea 
-                                placeholder="Input the second objective for this lesson plan"
-                                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24 mb-2"
-                            />
-                            <textarea 
-                                placeholder="Input the third objective for this lesson plan"
-                                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24"
-                            />
+
                         </div>
 
                         <div>

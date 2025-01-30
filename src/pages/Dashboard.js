@@ -37,7 +37,7 @@ const Dashboard = () => {
         {
             title: "Document Layout",
             route: "/document-layout",
-            description: "Easily fill in pre-designed documents with fixed layouts. Simply enter the required information and export as a PDF—no editing or formatting needed."
+            description: "Easily fill in pre-designed documents with fixed layouts. Simply enter the required information and export as a docx file—no editing or formatting needed."
         },
         {
             title: "Resources",
