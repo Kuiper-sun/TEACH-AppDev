@@ -4,6 +4,11 @@ import { Home, ChevronDown, Bell, Settings, Search } from 'lucide-react';
 
 const AddStudentDataForm = () => {
   const navigate = useNavigate();
+  const handleNotificationClick = () => navigate('/notifications');
+  const handleSettingsClick = () => navigate('/settings');
+  const handleProfileClick = () => navigate('/profile');
+  const handleStudentProgressClick = () => navigate('/student-progress');
+  const handleHomeClick = () => navigate('/dashboard');
   const [formData, setFormData] = useState({
     subject: '',
     gradeLevel: '',
@@ -79,13 +84,17 @@ const AddStudentDataForm = () => {
       <div className="flex-1 bg-gray-50 rounded-tl-[2.5rem] p-8 overflow-y-auto">
         {/* Breadcrumb */}
         <div className="flex items-center mb-6 text-gray-600">
-          <Home className="h-4 w-4 mr-2" />
-          <span>Home</span>
+           <span className="flex items-center cursor-pointer hover:underline" onClick={handleHomeClick}>
+           <Home className="h-4 w-4 mr-2" />
+           <span>Home</span>
+           </span>
           <span className="mx-2">/</span>
-          <span>Student Progress</span>
+          <span className="cursor-pointer hover:underline" onClick={handleStudentProgressClick}>
+             Student Progress
+          </span>
           <span className="mx-2">/</span>
           <span className="text-blue-600">Add Record</span>
-        </div>
+       </div>
 
         {/* Main Form */}
         <div className="bg-white rounded-xl shadow-sm p-8">
@@ -385,9 +394,9 @@ const AddStudentDataForm = () => {
 
         {/* Right Icons */}
         <div className="absolute top-8 right-8 flex items-center space-x-4">
-          <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
-          <Settings className="h-6 w-6 text-gray-600 cursor-pointer" />
-          <div className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" />
+          <Bell className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleNotificationClick}/>
+          <Settings className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleSettingsClick}/>
+          <div className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" onClick={handleProfileClick}/>
         </div>
       </div>
     </div>

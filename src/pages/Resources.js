@@ -135,8 +135,8 @@ const Resources = () => {
 
             {/* Top right icons */}
             <div className="absolute top-6 right-6 flex items-center space-x-4">
-                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
-                <Gear className="h-6 w-6 text-gray-600 cursor-pointer" />
+                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleNotificationClick}/>
+                <Gear className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleSettingsClick}/>
                 <div className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" onClick={handleProfileClick} />
             </div>
         </div>

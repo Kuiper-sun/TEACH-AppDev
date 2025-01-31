@@ -4,6 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const navigate = useNavigate();
+    const handleNotificationsClick = () => {
+        navigate("/notifications");
+      };
+    
+      const handleSettingsClick = () => {
+        navigate("/settings");
+      };
+    const handleHomeClick = () => {
+        navigate("/dashboard");
+      };
     const [profile, setProfile] = useState({
         name: 'Pamela Golosinda',
         email: 'elementaryteach@gmail.com',
@@ -83,10 +93,12 @@ const Profile = () => {
             <main className="flex-1 bg-gray-50 rounded-tl-[2.5rem] p-8 relative">
                 {/* Breadcrumb */}
                 <div className="flex items-center mb-6 text-gray-600">
-                    <Home className="h-4 w-4 mr-2" />
-                    <span className="mr-2">Home</span>
-                    <span className="mx-2">/</span>
-                    <span>Profile</span>
+                  <Home className="h-4 w-4 mr-2 cursor-pointer" onClick={handleHomeClick} />
+                  <span className="mr-2 cursor-pointer hover:underline" onClick={handleHomeClick}>
+                    Home
+                  </span>
+                  <span className="mx-2">/</span>
+                  <span>Profile</span>
                 </div>
 
                 {/* Title */}
@@ -163,14 +175,20 @@ const Profile = () => {
 
                 {/* Right Icons */}
                 <div className="absolute top-8 right-8 flex items-center space-x-4">
-                    <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
-                    <Settings className="h-6 w-6 text-gray-600 cursor-pointer" />
-                    <img 
-                        src="/api/placeholder/40/40"
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
-                    />
-                </div>
+      <Bell 
+        className="h-6 w-6 text-gray-600 cursor-pointer" 
+        onClick={handleNotificationsClick} 
+      />
+      <Settings 
+        className="h-6 w-6 text-gray-600 cursor-pointer" 
+        onClick={handleSettingsClick} 
+      />
+      <img 
+        src="/api/placeholder/40/40"
+        alt="Profile"
+        className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
+      />
+    </div>
             </main>
         </div>
     );

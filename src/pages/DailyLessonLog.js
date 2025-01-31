@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Home, Settings, Search, Download, User, Printer } from 'lucide-react';
+import { Bell, Home, Settings, Search, Download, User } from 'lucide-react';
 
 const DailyLessonLog = () => {
     const navigate = useNavigate();
@@ -241,9 +241,9 @@ const DailyLessonLog = () => {
 
             {/* Top right icons */}
             <div className="absolute top-6 right-6 flex items-center space-x-4">
-                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
-                <Printer className="h-6 w-6 text-gray-600 cursor-pointer" />
-                <div className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" onClick={handleProfileClick} />
+                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" oClick={handleNotificationClick} />
+                <Settings className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleSettingsClick} />
+                <User className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" onClick={handleProfileClick} />
             </div>
         </div>
     );

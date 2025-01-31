@@ -148,8 +148,10 @@ const DocumentLayout = () => {
             </div>
 
             {/* Top right notification icon */}
-            <div className="absolute top-6 right-6">
-                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
+            <div className="absolute top-6 right-6 flex items-center space-x-4">
+                <Bell className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleNotificationClick}/>
+                <Settings className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleSettingsClick}/>
+                <User className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" onClick={handleProfileClick} />
             </div>
         </div>
     );
