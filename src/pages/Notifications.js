@@ -4,6 +4,20 @@ import { useNavigate } from 'react-router-dom';
 
 const Notifications = () => {
     const navigate = useNavigate();
+    const handleNotificationsClick = () => {
+        navigate("/notifications");
+      };
+    
+      const handleSettingsClick = () => {
+        navigate("/settings");
+      };
+    
+      const handleProfileClick = () => {
+        navigate("/profile");
+      };
+      const handleHomeClick = () => {
+        navigate("/dashboard");
+      };
     const [notifications] = useState([
         { id: 1, message: "Hi Pamela, your 'History Report' task is scheduled today from 8:00 to 10:00. Good luck with your session!", timeAgo: "7 days ago" },
         { id: 2, message: "Hi Pamela, your 'History Report' task is scheduled today from 8:00 to 10:00. Good luck with your session!", timeAgo: "7 days ago" },
@@ -82,7 +96,7 @@ const Notifications = () => {
                 {/* Breadcrumb */}
                 <div className="flex items-center mb-6 text-gray-600">
                     <Home className="h-4 w-4 mr-2" />
-                    <span className="mr-2">Home</span>
+                    <span className="mr-2" onClick={handleHomeClick}>Home</span>
                     <span className="mx-2">/</span>
                     <span>Notifications</span>
                 </div>
@@ -141,14 +155,20 @@ const Notifications = () => {
 
                 {/* Right Icons */}
                 <div className="absolute top-8 right-8 flex items-center space-x-4">
-                    <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
-                    <Settings className="h-6 w-6 text-gray-600 cursor-pointer" />
-                    <img 
-                        src="/api/placeholder/40/40"
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
+                     <Bell 
+                       className="h-6 w-6 text-gray-600 cursor-pointer" 
+                       onClick={handleNotificationsClick} 
+                    />
+                     <Settings 
+                       className="h-6 w-6 text-gray-600 cursor-pointer" 
+                       onClick={handleSettingsClick} 
+                    />
+                     <User 
+                       className="w-10 h-10 text-gray-600 cursor-pointer" 
+                       onClick={handleProfileClick} 
                     />
                 </div>
+
             </main>
         </div>
     );
