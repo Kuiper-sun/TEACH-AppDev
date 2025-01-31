@@ -1,4 +1,4 @@
-![LogoName](https://github.com/user-attachments/assets/591327eb-407c-4996-82ae-414eb3b95e9e)# Teach - Elementary School Teacher Assistant Application
+# Teach - Elementary School Teacher Assistant Application
 
 ## Overview
 **Teach** is a web application designed to assist elementary school teachers in managing their daily tasks, tracking student progress, and organizing lesson plans. The application aims to reduce the administrative burden on teachers, allowing them to focus more on delivering high-quality education and engaging with their students.
