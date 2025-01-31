@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Dto.UserAccount;
 using API.Dto.UserAccountDto;
 using API.Model;
 
@@ -16,7 +17,7 @@ namespace API.Interfaces
 
         Task<UserAccount?> DeleteAsync(int id);
 
-        Task<UserAccount?> GetUserInfoAsync(string email, string password);
+        Task<UserAccount?> GetUserInfoAsync(LoginRequestDto loginRequest);
 
         Task<bool> UserAccountExistsAsync(int id);
     }

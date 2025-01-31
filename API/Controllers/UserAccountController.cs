@@ -50,7 +50,7 @@ namespace API.Controllers
         [Route("/login")]
         public async Task<IActionResult> GetUserInfo([FromBody] LoginRequestDto loginRequest)
         {
-            var user = await _userAccountRepo.GetUserInfoAsync(loginRequest.Email, loginRequest.Password);
+            var user = await _userAccountRepo.GetUserInfoAsync(loginRequest);
 
             if(user == null)
             {

@@ -54,7 +54,7 @@ app.UseHttpsRedirection();
 app.UseCors(x => x
  .AllowAnyMethod()
  .AllowAnyHeader()
- .WithOrigins("http://127.0.0.1:5500/TestAPI") // Remove final slash in the URL to avoid errors use the format "http://localhost:3000" instead of "http://localhost:3000/"
+ .WithOrigins("http://localhost:3000") // Remove final slash in the URL to avoid errors use the format "http://localhost:3000" instead of "http://localhost:3000/"
  .SetIsOriginAllowed(origin => true)
  );
 

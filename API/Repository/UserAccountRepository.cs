@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dto.UserAccount;
 using API.Dto.UserAccountDto;
 using API.Interfaces;
 using API.Model;
@@ -56,9 +57,9 @@ namespace API.Repository
             return await _context.UserAccounts.Include(r => r.SchoolResources).Include(t => t.SchoolTasks).ToListAsync();
         }
 
-        public async Task<UserAccount?> GetUserInfoAsync(string email, string password)
+        public async Task<UserAccount?> GetUserInfoAsync(LoginRequestDto loginRequest)
         {
-            var user =  await _context.UserAccounts.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+            var user =  await _context.UserAccounts.FirstOrDefaultAsync(x => x.Email == loginRequest.Email && x.Password == loginRequest.Password);
 
             if(user == null)
             {
