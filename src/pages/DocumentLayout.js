@@ -50,16 +50,6 @@ const DocumentLayout = () => {
                     <div className="flex items-center mb-6">
                         <div className="text-white text-xl font-bold">TEACH</div>
                     </div>
-                    
-                    {/* Search */}
-                    <div className="relative mb-6">
-                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                        <input 
-                            type="text"
-                            placeholder="Search..."
-                            className="w-full pl-10 pr-4 py-2 rounded-lg bg-blue-500/30 text-white placeholder-gray-300"
-                        />
-                    </div>
 
                     {/* Navigation */}
                     <nav className="space-y-2">
@@ -115,14 +105,6 @@ const DocumentLayout = () => {
                     <h1 className="text-2xl font-bold">Document Layout</h1>
                     <div className="flex items-center">
 
-                        <div className="ml-4 relative">
-                            <input 
-                                type="text"
-                                placeholder="Search documents..."
-                                className="pl-4 pr-10 py-2 rounded-lg border focus:outline-none focus:border-blue-500"
-                            />
-                            <Search className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
-                        </div>
                     </div>
                 </div>
 

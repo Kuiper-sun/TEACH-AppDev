@@ -75,16 +75,6 @@ const Resources = () => {
                         <div className="text-white text-xl font-bold">TEACH</div>
                     </div>
 
-                    {/* Search */}
-                    <div className="relative mb-6">
-                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                        <input 
-                            type="text"
-                            placeholder="Search..."
-                            className="w-full pl-10 pr-4 py-2 rounded-lg bg-blue-500/30 text-white placeholder-gray-300"
-                        />
-                    </div>
-
                     {/* Navigation */}
                     <nav className="space-y-2">
                         <div 
@@ -146,14 +136,6 @@ const Resources = () => {
                             <span>Upload</span>
                         </button>
 
-                        <div className="relative">
-                            <input 
-                                type="text"
-                                placeholder="Search..."
-                                className="pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:border-blue-500"
-                            />
-                            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                        </div>
                     </div>
                 </div>
 

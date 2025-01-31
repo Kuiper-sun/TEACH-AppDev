@@ -71,15 +71,6 @@ const Dashboard = () => {
                     <span className="text-2xl font-bold text-white">TEACH</span>
                 </div>
 
-                {/* Search */}
-                <div className="relative mb-8">
-                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                    <input 
-                        type="text"
-                        placeholder="Search..."
-                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-blue-600/30 text-white placeholder-gray-300 focus:outline-none"
-                    />
-                </div>
 
                 {/* Navigation */}
                 <nav className="flex-1">
