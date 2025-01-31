@@ -50,10 +50,6 @@ Navigate to the project directory and install the necessary dependencies for bot
    cd ../frontend
    npm start
 
-## Routes
-
-## API Routes
-
 ## Collaborators
 - Gabriel R. Abesamis
 - Abdurasheed A. David
