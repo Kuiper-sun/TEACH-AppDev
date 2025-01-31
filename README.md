@@ -27,27 +27,28 @@ To get started with the Teach application, follow these steps:
    
 2. **Install Dependencies**:
 Navigate to the project directory and install the necessary dependencies for both the frontend and backend.
-  ```bash
-  cd Teach/frontend
-  npm install
-  cd ../backend
-  dotnet restore
+   ```bash
+   cd Teach/frontend
+   npm install
+   cd ../backend
+   dotnet restore
 
 3. **Set Up the Database**:
 - Ensure you have Microsoft SQL Server installed.
 - Update the connection string in the appsettings.json file with your database credentials.
 - Run the database migrations to set up the required tables.
-  ```bash
-  dotnet ef database update
+   ```bash
+   dotnet ef database update
 
 4. **Run the Application**:
 - Start the backend server:
-  ```bash
-    dotnet run
+   ```bash
+   dotnet run
+   
 - Start the frontend development server:
-  ```bash
-  cd ../frontend
-  npm start
+   ```bash
+   cd ../frontend
+   npm start
 
 ## Routes
 
@@ -62,7 +63,7 @@ Navigate to the project directory and install the necessary dependencies for bot
 ## Licenses
 MIT License
 
-Copyright (c) 2025 Abesamis, David, David, Supnet
+Copyright (c) 2025 Abesamis, David, Golosinda, Supnet
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
