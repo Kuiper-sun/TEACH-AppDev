@@ -36,6 +36,9 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IWrittenWorkRepository, WrittenWorksRepository>();
 builder.Services.AddScoped<IQuarterlyAssessmentRepository, QuarterlyAssessmentRepository>();
 builder.Services.AddScoped<IUserStudentJoin, UserStudenJoinRepository>();
+// builder.Services.AddScoped<>();
+// builder.Services.AddScoped<>();
+// builder.Services.AddScoped<>();
 
 var app = builder.Build();
 

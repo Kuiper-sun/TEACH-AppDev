@@ -16,6 +16,8 @@ namespace API.Interfaces
 
         Task<UserAccount?> DeleteAsync(int id);
 
+        Task<UserAccount?> GetUserInfoAsync(string email, string password);
+
         Task<bool> UserAccountExistsAsync(int id);
     }
 }

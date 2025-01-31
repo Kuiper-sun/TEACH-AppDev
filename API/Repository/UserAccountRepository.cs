@@ -56,6 +56,18 @@ namespace API.Repository
             return await _context.UserAccounts.Include(r => r.SchoolResources).Include(t => t.SchoolTasks).ToListAsync();
         }
 
+        public async Task<UserAccount?> GetUserInfoAsync(string email, string password)
+        {
+            var user =  await _context.UserAccounts.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+
+            if(user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
+
         public async Task<UserAccount?> UpdateAsync(int id, UpdateAccountRequestDto updateDto)
         {
             var userModel = await _context.UserAccounts.FirstOrDefaultAsync(x => x.Id == id);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Dto.UserAccount;
 using API.Dto.UserAccountDto;
 using API.Model;
 
@@ -28,6 +29,17 @@ namespace API.Mappers
                 FullName = createUserDto.FullName,
                 Email = createUserDto.Email,
                 Password = createUserDto.Password
+            };
+        }
+
+        public static UserInfoDto ToUserInfoDto(this UserAccount userAccount)
+        {
+            return new UserInfoDto
+            {
+                Id = userAccount.Id,
+                FullName = userAccount.FullName,
+                Email = userAccount.Email,
+                Password = userAccount.Password
             };
         }
 

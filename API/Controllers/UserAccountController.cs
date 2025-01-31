@@ -45,6 +45,21 @@ namespace API.Controllers
             return Ok(userAccount.ToUserAccountDto());
         }
 
+        [HttpGet]
+        [Route("/userInfo")]
+        public async Task<IActionResult> GetUserInfo(string email, string password)
+        {
+            var user = await _userAccountRepo.GetUserInfoAsync(email, password);
+
+            if(user == null)
+            {
+                return NotFound("User does not exist, or wrong email and password.");
+            }
+
+            return Ok(user.ToUserInfoDto());
+        }
+
+
         // POST: api/UserAccount
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserAccountRequestDto createUserDto)
