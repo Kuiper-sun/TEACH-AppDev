@@ -14,6 +14,9 @@ namespace API.Mappers
             return new StudentDto
             {
                 StudentName = student.StudentName,
+                StudentLrn = student.StudentLrn,
+                Subject = student.Subject,
+                Section = student.Section,
                 WrittenWorks = student.WrittenWorks.Select(x => x.toWrittenWorkDto()).ToList(),
                 PerformanceTasks = student.PerformanceTasks.Select(y => y.toPerformanceTaskDto()).ToList(),
                 QuarterlyAssessments = student.QuarterlyAssessments.Select(z => z.toQuarterlyAssessmentDto()).ToList()
@@ -24,7 +27,10 @@ namespace API.Mappers
         {
             return new Student
             {
-                StudentName = createDto.StudentName
+                StudentName = createDto.StudentName,
+                StudentLrn = createDto.StudentLrn,
+                Subject = createDto.Subject,
+                Section = createDto.Section,
             };
         }
     }

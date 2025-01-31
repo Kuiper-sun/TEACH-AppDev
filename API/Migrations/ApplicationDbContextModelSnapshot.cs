@@ -37,6 +37,10 @@ namespace API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DayOfWeek")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("GradeLevel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -140,6 +144,80 @@ namespace API.Migrations
                     b.ToTable("LessonPlanLayout");
                 });
 
+            modelBuilder.Entity("API.Model.PerformanceTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Attendance")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ParticipationActivities")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("Percentage")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("PracticumScores")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("RecitationScores")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TaskDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalClasses")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPracticumScores")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("PerformanceTasks");
+                });
+
+            modelBuilder.Entity("API.Model.QuarterlyAssessment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("ExamScores")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Percentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("QAssessmentDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalExamScores")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("QuarterlyAssessments");
+                });
+
             modelBuilder.Entity("API.Model.SchoolResource", b =>
                 {
                     b.Property<int>("Id")
@@ -206,6 +284,35 @@ namespace API.Migrations
                     b.ToTable("SchoolTask");
                 });
 
+            modelBuilder.Entity("API.Model.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Section")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentLrn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("API.Model.TemplateType", b =>
                 {
                     b.Property<int>("Id")
@@ -248,6 +355,21 @@ namespace API.Migrations
                     b.ToTable("UserAccount");
                 });
 
+            modelBuilder.Entity("API.Model.UserStudentJoin", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("UserStudentJoin");
+                });
+
             modelBuilder.Entity("API.Model.UserTemplateJoin", b =>
                 {
                     b.Property<int>("UserId")
@@ -261,6 +383,43 @@ namespace API.Migrations
                     b.HasIndex("TemplateId");
 
                     b.ToTable("UserTemplateJoin");
+                });
+
+            modelBuilder.Entity("API.Model.WrittenWork", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("OverallWrittenScores")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("Percentage")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("QuizScores")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalItems")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("WrittenActivityScores")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("WrittenWorks");
                 });
 
             modelBuilder.Entity("API.Model.DailyLessonLogLayout", b =>
@@ -293,6 +452,26 @@ namespace API.Migrations
                     b.Navigation("TemplateType");
                 });
 
+            modelBuilder.Entity("API.Model.PerformanceTask", b =>
+                {
+                    b.HasOne("API.Model.Student", "Student")
+                        .WithMany("PerformanceTasks")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("API.Model.QuarterlyAssessment", b =>
+                {
+                    b.HasOne("API.Model.Student", "Student")
+                        .WithMany("QuarterlyAssessments")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("API.Model.SchoolResource", b =>
                 {
                     b.HasOne("API.Model.UserAccount", "UserAccount")
@@ -309,6 +488,25 @@ namespace API.Migrations
                         .WithMany("SchoolTasks")
                         .HasForeignKey("UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("UserAccount");
+                });
+
+            modelBuilder.Entity("API.Model.UserStudentJoin", b =>
+                {
+                    b.HasOne("API.Model.Student", "Student")
+                        .WithMany("UserStudentJoins")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Model.UserAccount", "UserAccount")
+                        .WithMany("UserStudentJoins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
 
                     b.Navigation("UserAccount");
                 });
@@ -332,6 +530,27 @@ namespace API.Migrations
                     b.Navigation("templateType");
                 });
 
+            modelBuilder.Entity("API.Model.WrittenWork", b =>
+                {
+                    b.HasOne("API.Model.Student", "Student")
+                        .WithMany("WrittenWorks")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("API.Model.Student", b =>
+                {
+                    b.Navigation("PerformanceTasks");
+
+                    b.Navigation("QuarterlyAssessments");
+
+                    b.Navigation("UserStudentJoins");
+
+                    b.Navigation("WrittenWorks");
+                });
+
             modelBuilder.Entity("API.Model.TemplateType", b =>
                 {
                     b.Navigation("DailyLessonLogLayouts");
@@ -348,6 +567,8 @@ namespace API.Migrations
                     b.Navigation("SchoolResources");
 
                     b.Navigation("SchoolTasks");
+
+                    b.Navigation("UserStudentJoins");
 
                     b.Navigation("UserTemplateJoins");
                 });

@@ -8,7 +8,11 @@ namespace API.Dto.WrittenWorks
     public class UpdateWrittenWorksRequestDto
     {
         public string WorkDetails { get; set; } = string.Empty;
-        public decimal grade { get; set; }
+        public decimal QuizScores { get; set; }
+        public decimal WrittenActivityScores { get; set; }
+        public decimal OverallWrittenScores { get; set; }
+        public decimal Percentage { get; set; }
+        public int TotalItems { get; set; }
         
     }
 }

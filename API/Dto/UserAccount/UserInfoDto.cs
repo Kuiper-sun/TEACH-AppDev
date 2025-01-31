@@ -10,6 +10,5 @@ namespace API.Dto.UserAccount
         public int Id { get; set; }
         public string FullName { get; set; } = String.Empty;
         public string Email { get; set; } = String.Empty;
-        public string Password { get; set; } = String.Empty;
     }
 }

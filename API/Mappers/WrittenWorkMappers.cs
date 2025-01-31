@@ -14,7 +14,11 @@ namespace API.Mappers
             return new WrittenWorkDto
             {
                 WorkDetails = writtenWork.WorkDetails,
-                grade = writtenWork.grade
+                QuizScores = writtenWork.QuizScores,
+                WrittenActivityScores = writtenWork.WrittenActivityScores,
+                OverallWrittenScores = writtenWork.OverallWrittenScores,
+                Percentage = writtenWork.Percentage,
+                TotalItems = writtenWork.TotalItems
             };
         }
 
@@ -23,7 +27,11 @@ namespace API.Mappers
             return new WrittenWork
             {
                 WorkDetails = createDto.WorkDetails,
-                grade = createDto.grade,
+                QuizScores = createDto.QuizScores,
+                WrittenActivityScores = createDto.WrittenActivityScores,
+                OverallWrittenScores = createDto.OverallWrittenScores,
+                Percentage = createDto.Percentage,
+                TotalItems = createDto.TotalItems,
                 StudentId = studentId
             };
         }

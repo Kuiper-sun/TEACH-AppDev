@@ -8,6 +8,12 @@ namespace API.Dto.QuarterlyAssessment
     public class UpdateQuarterlyAssessmentDto
     {
         public string QAssessmentDetails { get; set; } = string.Empty;
-        public decimal grade { get; set; }
+
+
+        public decimal ExamScores { get; set; }
+
+        public decimal TotalExamScores { get; set; }
+
+        public decimal Percentage { get; set; }
     }
 }

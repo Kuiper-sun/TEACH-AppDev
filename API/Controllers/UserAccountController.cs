@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dto.UserAccount;
 using API.Dto.UserAccountDto;
 using API.Interfaces;
 using API.Mappers;
@@ -45,18 +46,23 @@ namespace API.Controllers
             return Ok(userAccount.ToUserAccountDto());
         }
 
-        [HttpGet]
-        [Route("/userInfo")]
-        public async Task<IActionResult> GetUserInfo(string email, string password)
+        [HttpPost]
+        [Route("/login")]
+        public async Task<IActionResult> GetUserInfo([FromBody] LoginRequestDto loginRequest)
         {
-            var user = await _userAccountRepo.GetUserInfoAsync(email, password);
+            var user = await _userAccountRepo.GetUserInfoAsync(loginRequest.Email, loginRequest.Password);
 
             if(user == null)
             {
-                return NotFound("User does not exist, or wrong email and password.");
+                return NotFound("Invalid Email or Password");
             }
 
-            return Ok(user.ToUserInfoDto());
+            return Ok(new UserInfoDto
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email
+            });
         }
 
 

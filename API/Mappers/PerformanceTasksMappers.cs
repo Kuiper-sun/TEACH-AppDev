@@ -14,7 +14,13 @@ namespace API.Mappers
             return new PerformanceTaskDto
             {
                 TaskDetails = pt.TaskDetails,
-                grade = pt.grade
+                Attendance = pt.Attendance,
+                TotalClasses = pt.TotalClasses,
+                PracticumScores = pt.PracticumScores,
+                TotalPracticumScores = pt.TotalPracticumScores,
+                RecitationScores = pt.RecitationScores,
+                ParticipationActivities = pt.ParticipationActivities,
+                Percentage = pt.Percentage
             };
         }
 
@@ -23,7 +29,13 @@ namespace API.Mappers
             return new PerformanceTask
             {
                 TaskDetails = createDto.TaskDetails,
-                grade = createDto.grade,
+                Attendance = createDto.Attendance,
+                TotalClasses = createDto.TotalClasses,
+                PracticumScores = createDto.PracticumScores,
+                TotalPracticumScores = createDto.TotalPracticumScores,
+                RecitationScores = createDto.RecitationScores,
+                ParticipationActivities = createDto.ParticipationActivities,
+                Percentage = createDto.Percentage,
                 StudentId = studentId
             };
         }

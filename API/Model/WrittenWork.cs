@@ -12,7 +12,19 @@ namespace API.Model
         public string WorkDetails { get; set; } = string.Empty;
 
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal grade { get; set; }
+        public decimal QuizScores { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal WrittenActivityScores { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal OverallWrittenScores { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Percentage { get; set; }
+
+        public int TotalItems { get; set; }
+
 
         //Nav Property
         public int? StudentId {get; set;}

@@ -8,5 +8,8 @@ namespace API.Dto.Student
     public class CreateStudentRequestDto
     {
         public string StudentName { get; set; } = string.Empty;
+        public string StudentLrn { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
+        public string Section { get; set; } = string.Empty;
     }
 }

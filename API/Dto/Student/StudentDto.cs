@@ -12,6 +12,9 @@ namespace API.Dto.Student
     public class StudentDto
     {
         public string StudentName { get; set; } = string.Empty;
+        public string StudentLrn { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
+        public string Section { get; set; } = string.Empty;
         public List<WrittenWorkDto> WrittenWorks {get; set;}
         public List<PerformanceTaskDto> PerformanceTasks {get; set;}
         public List<QuarterlyAssessmentDto> QuarterlyAssessments {get; set;}

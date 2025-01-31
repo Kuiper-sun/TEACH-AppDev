@@ -10,9 +10,23 @@ namespace API.Model
     {
         public int Id { get; set; }
         public string TaskDetails { get; set; } = string.Empty;
+        public int Attendance { get; set; }
+        public int TotalClasses { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal grade { get; set; }
+        public decimal PracticumScores { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal TotalPracticumScores { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal RecitationScores { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal ParticipationActivities { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Percentage { get; set; }
 
         //Nav Property
         public int? StudentId { get; set; }

@@ -13,8 +13,13 @@ namespace API.Model
 
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal grade { get; set; }
+        public decimal ExamScores { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TotalExamScores { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Percentage { get; set; }
         //Nav Property
         public int? StudentId { get; set; }
         public Student? Student { get; set; }

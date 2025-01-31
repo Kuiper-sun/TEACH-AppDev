@@ -14,7 +14,9 @@ namespace API.Mappers
             return new QuarterlyAssessmentDto
             {
                 QAssessmentDetails = qa.QAssessmentDetails,
-                grade = qa.grade
+                ExamScores = qa.ExamScores,
+                TotalExamScores = qa.TotalExamScores,
+                Percentage = qa.Percentage
             };
         }
 
@@ -23,7 +25,9 @@ namespace API.Mappers
             return new QuarterlyAssessment
             {
                 QAssessmentDetails = createDto.QAssessmentDetails,
-                grade = createDto.grade,
+                ExamScores = createDto.ExamScores,
+                TotalExamScores = createDto.TotalExamScores,
+                Percentage = createDto.Percentage,
                 StudentId = studentId 
             };
         }

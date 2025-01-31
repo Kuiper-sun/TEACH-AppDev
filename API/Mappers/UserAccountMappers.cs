@@ -39,7 +39,6 @@ namespace API.Mappers
                 Id = userAccount.Id,
                 FullName = userAccount.FullName,
                 Email = userAccount.Email,
-                Password = userAccount.Password
             };
         }
 
