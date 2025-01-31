@@ -27,6 +27,10 @@ namespace API.Data
         public DbSet<DailyLessonLogLayout> DailyLessonLogLayouts { get; set; }
         public DbSet<DailyTimeRecordLayout> DailyTimeRecordLayouts { get; set; }
 
+        public DbSet<Student> Students {get; set;}
+        public DbSet<PerformanceTask> PerformanceTasks {get; set;}
+        public DbSet<WrittenWork> WrittenWorks {get; set;}
+        public DbSet<QuarterlyAssessment> QuarterlyAssessments {get; set;}
         //Customization
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   

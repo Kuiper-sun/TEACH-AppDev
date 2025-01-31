@@ -32,8 +32,8 @@ builder.Services.AddScoped<IDailyLessonLogLayoutRepository, DailyLessonLogLayout
 builder.Services.AddScoped<IDailyTimeRecordLayout, DailyTimeRecordLayoutRepository>();
 builder.Services.AddScoped<IUserTemplateJoin, UserTemplateJoinRepository>();
 builder.Services.AddScoped<IWordFileGeneratorService, WordFileGenerator>(); 
-
-
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IWrittenWorkRepository, WrittenWorksRepository>();
 
 var app = builder.Build();
 
