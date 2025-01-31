@@ -13,6 +13,7 @@ namespace API.Model
         public List<WrittenWork> WrittenWorks {get; set;} = new List<WrittenWork>();
         public List<QuarterlyAssessment> QuarterlyAssessments {get; set;} = new List<QuarterlyAssessment>();
         public List<PerformanceTask> PerformanceTasks {get; set;} = new List<PerformanceTask>();
-
+        public List<UserStudentJoin> UserStudentJoins {get; set;} = new List<UserStudentJoin>();
+    
     }
 }

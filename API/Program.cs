@@ -34,6 +34,8 @@ builder.Services.AddScoped<IUserTemplateJoin, UserTemplateJoinRepository>();
 builder.Services.AddScoped<IWordFileGeneratorService, WordFileGenerator>(); 
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IWrittenWorkRepository, WrittenWorksRepository>();
+builder.Services.AddScoped<IQuarterlyAssessmentRepository, QuarterlyAssessmentRepository>();
+builder.Services.AddScoped<IUserStudentJoin, UserStudenJoinRepository>();
 
 var app = builder.Build();
 

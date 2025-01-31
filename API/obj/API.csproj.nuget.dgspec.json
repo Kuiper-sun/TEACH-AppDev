@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj": {}
+    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj": {
+    "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\API.csproj",
+        "projectPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\API.csproj",
         "packagesPath": "C:\\Users\\Papa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\API\\obj\\",
+        "outputPath": "C:\\Users\\Papa\\Desktop\\Code\\ADET - Teach\\TEACH-AppDev\\APi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

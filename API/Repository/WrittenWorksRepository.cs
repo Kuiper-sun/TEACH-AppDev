@@ -24,9 +24,16 @@ namespace API.Repository
             return writtenWork;
         }
 
-        public Task<WrittenWork?> DeleteWrittenWorkByIdAsync(int id)
+        public async Task<WrittenWork?> DeleteWrittenWorkByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var writtenWork = await _context.WrittenWorks.FirstOrDefaultAsync(x => x.Id == id);
+            if(writtenWork == null)
+            {
+                return null;
+            }
+            _context.Remove(writtenWork);
+            await _context.SaveChangesAsync();
+            return writtenWork;
         }
 
         public async Task<List<WrittenWork>> GetAllWrittenWorksAsync()

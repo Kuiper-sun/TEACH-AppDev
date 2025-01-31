@@ -41,14 +41,18 @@ namespace API.Repository
         public async Task<List<Student>> GetAllStudentAsync()
         {
             return await _context.Students
-                                 .Include(ww => ww.WrittenWorks).
-                                 ToListAsync();
+                                 .Include(ww => ww.WrittenWorks)
+                                 .Include(pt => pt.PerformanceTasks)
+                                 .Include(qa => qa.QuarterlyAssessments)
+                                 .ToListAsync();
         }
 
         public async Task<Student?> GetByIdStudentAsync(int id)
         {
             var student = await _context.Students
                                         .Include(ww => ww.WrittenWorks)
+                                        .Include(pt => pt.PerformanceTasks)
+                                        .Include(qa => qa.QuarterlyAssessments)
                                         .FirstOrDefaultAsync(x => x.Id == id);
             
             if(student == null)

@@ -17,6 +17,8 @@ namespace API.Model
         public List<SchoolResource> SchoolResources { get; set; } = new List<SchoolResource>();
         public List<SchoolTask> SchoolTasks { get; set; } = new List<SchoolTask>();
         public List<UserTemplateJoin> UserTemplateJoins { get; set; } = new List<UserTemplateJoin>();
+
+        public List<UserStudentJoin> UserStudentJoins {get; set;} = new List<UserStudentJoin>();
         
     }
 }

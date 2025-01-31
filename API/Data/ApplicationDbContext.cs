@@ -17,6 +17,7 @@ namespace API.Data
 
         //Join Table
         public DbSet<UserTemplateJoin> UserTemplateJoins { get; set; }
+        public DbSet<UserStudentJoin> UserStudentJoins{get; set;}
 
         //Main Tables
         public DbSet<UserAccount> UserAccounts { get; set; }
@@ -49,6 +50,18 @@ namespace API.Data
              .WithMany(t => t.UserTemplateJoins)
              .HasForeignKey(u => u.TemplateId);
 
+            //UserStudentJoin -> UserAccount, StudentId
+            modelBuilder.Entity<UserStudentJoin>(x => x.HasKey(p => new { p.UserId, p.StudentId }));
+
+            modelBuilder.Entity<UserStudentJoin>()
+             .HasOne(u => u.UserAccount)
+             .WithMany(t => t.UserStudentJoins)
+             .HasForeignKey(u =>u.UserId);
+
+            modelBuilder.Entity<UserStudentJoin>()
+             .HasOne(u => u.Student)
+             .WithMany(t => t.UserStudentJoins)
+             .HasForeignKey(u =>u.StudentId);
 
             // UserAccount -> SchoolResource, SchoolTask
             modelBuilder.Entity<UserAccount>()
@@ -75,6 +88,22 @@ namespace API.Data
             modelBuilder.Entity<TemplateType>()
             .HasMany(t => t.DailyTimeRecordLayouts)
             .WithOne(l => l.TemplateType)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            //Student -> WrittenWorks, PerformanceTasks, QuarterlyAssessments
+            modelBuilder.Entity<Student>()
+            .HasMany(t => t.WrittenWorks)
+            .WithOne(s => s.Student)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Student>()
+            .HasMany(t => t.PerformanceTasks)
+            .WithOne(s => s.Student)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Student>()
+            .HasMany(t => t.QuarterlyAssessments)
+            .WithOne(s => s.Student)
             .OnDelete(DeleteBehavior.Cascade);
 
         }

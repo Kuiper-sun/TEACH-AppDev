@@ -15,6 +15,8 @@ namespace API.Mappers
             {
                 StudentName = student.StudentName,
                 WrittenWorks = student.WrittenWorks.Select(x => x.toWrittenWorkDto()).ToList(),
+                PerformanceTasks = student.PerformanceTasks.Select(y => y.toPerformanceTaskDto()).ToList(),
+                QuarterlyAssessments = student.QuarterlyAssessments.Select(z => z.toQuarterlyAssessmentDto()).ToList()
             };
         }
 
