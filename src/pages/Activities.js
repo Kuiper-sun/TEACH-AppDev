@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Home, Bell, Settings } from 'lucide-react';
+import { Search, Home, Bell, Settings, LogOut} from 'lucide-react';
 
 const Activities = () => {
     const navigate = useNavigate();
@@ -12,26 +12,33 @@ const Activities = () => {
         { id: 4, title: "Grade 5 English - Adverb of frequency Activity.pdf", path: "/Grade5_English_AdverbofFrequency.pdf"}
     ];
 
+    const handleLogout = () => {
+        // Clear session or authentication data (e.g., localStorage)
+        localStorage.removeItem('isLoggedIn');
+        // Navigate to the SignIn page
+        navigate('/signin');
+    };
+
     return (
-        <div className="flex h-screen bg-blue-400">
+        <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
             {/* Sidebar */}
-            <div className="w-80 p-6 flex flex-col justify-between">
+            <div className="w-64 p-6 flex flex-col justify-between">
                 <div>
-                    <div className="flex items-center mb-6">
-                        <div className="text-white text-xl font-bold">TEACH</div>
+                    <div className="flex items-center mb-8">
+                        <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
                     </div>
                     <nav className="space-y-2">
-                        <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                        <div className="flex items-center text-white p-3 rounded hover:bg-blue-500/30 cursor-pointer" 
                              onClick={() => navigate('/dashboard')}>
                             <Home className="h-5 w-5 mr-3" />
                             <span>Home</span>
                         </div>
-                        <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                        <div className="flex items-center text-white p-3 rounded hover:bg-blue-500/30 cursor-pointer" 
                              onClick={() => navigate('/notifications')}>
                             <Bell className="h-5 w-5 mr-3" />
                             <span>Notifications</span>
                         </div>
-                        <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                        <div className="flex items-center text-white p-3 rounded hover:bg-blue-500/30 cursor-pointer" 
                              onClick={() => navigate('/settings')}>
                             <Settings className="h-5 w-5 mr-3" />
                             <span>Settings</span>
@@ -39,48 +46,50 @@ const Activities = () => {
                     </nav>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
                          onClick={() => navigate('/profile')}>
-                        <div className="w-10 h-10 rounded-full bg-gray-300 mr-3" />
+                        <img 
+                            src="images/Profile.png" 
+                            alt="User Profile" 
+                            className="w-11 h-11 rounded-full object-cover mr-3"
+                        />
                         <div>
                             <div className="font-medium">Pamela Golosinda</div>
                             <div className="text-sm text-gray-300">Profile</div>
                         </div>
                     </div>
 
+                    {/* Logout Button */}
                     <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
-                         onClick={() => navigate('/logout')}>
+                         onClick={handleLogout}>
+                        <LogOut className="h-5 w-5 mr-3" />
                         <span>Log Out</span>
                     </div>
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 bg-white rounded-tl-3xl p-8">
+            <div className="flex-1 bg-gray-50 p-8">
                 {/* Breadcrumb */}
                 <div className="mb-6">
-                    <div className="text-lg text-gray-600">
-                        <span className="cursor-pointer" onClick={() => navigate('/dashboard')}>Home</span> / 
-                        <span className="cursor-pointer" onClick={() => navigate('/resources')}> Resources</span> / 
-                        <span className="text-blue-600"> Activities</span>
+                    <div className="text-lg text-gray-600 flex items-center">
+                        <Home className="h-5 w-5 mr-2 text-gray-600" />
+                        <span className="cursor-pointer" onClick={() => navigate('/dashboard')}>Home</span>
+                        <span className="mx-2 text-gray-600"> &gt; </span> {/* This is the '>' separator */}
+                        <span className="cursor-pointer" onClick={() => navigate('/resources')}>Resources</span>
+                        <span className="mx-2 text-gray-600"> &gt; </span> {/* Another '>' separator */}
+                        <span className="text-blue-600">Activities</span>
                     </div>
                 </div>
 
                 <h1 className="text-2xl font-bold mb-8">Activities</h1>
 
-                <div className="flex justify-between items-center mb-6">
-                    <div className="flex items-center space-x-4">
-                        <div className="w-8 h-8 rounded-full bg-gray-300 cursor-pointer" 
-                             onClick={() => navigate('/profile')} />
-                    </div>
-                </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {activities.map(activity => (
                         <div 
                             key={activity.id} 
-                            className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+                            className="bg-white p-6 rounded-xl shadow-sm border hover:shadow-lg transition-shadow cursor-pointer"
                         >
                             <div className="flex justify-center items-center w-full h-32 bg-gray-50 rounded-lg mb-4">
                                 <svg className="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
