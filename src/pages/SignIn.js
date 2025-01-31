@@ -53,11 +53,11 @@ const SignIn = () => {
         <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-600 via-blue-500 to-blue-200 p-6">
             <div className="w-full max-w-md space-y-6">
                 <div className="flex justify-center items-center mb-2">
-                    <div className="text-3xl font-bold text-gray-900">TEACH</div>
+                    <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-24 w-auto" />
                 </div>
 
                 <div className="text-center space-y-1">
-                    <h2 className="text-xl font-semibold text-gray-900">Sign In To Your Account</h2>
+                    <h2 className="text-xl font-bold text-gray-900">Sign In To Your Account</h2>
                     <p className="text-sm text-gray-700">Empower yourself as a teacher</p>
                 </div>
 
