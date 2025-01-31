@@ -71,12 +71,14 @@ namespace API.Services
         //Generate word file for LessonLog
         public async Task<MemoryStream> GenerateUserLessonLogWordFile(int userId, int templateId)
         {
+            //Get UserData
             var userData = await _lessonLog.GetUserLessonLog(userId, templateId);
             if (userData == null || !userData.Any())
             {
                 throw new Exception("No lesson logs found for this user or template");
             }
 
+            //Template Path
             var templatePath = Path.Combine(_env.ContentRootPath, "Templates", "LessonLog.docx");
             if (!File.Exists(templatePath))
             {
@@ -90,21 +92,24 @@ namespace API.Services
                 await fileStream.CopyToAsync(memoryStream);
             }
 
+            Console.WriteLine($"DEBUG: GradeLevel = '{userData.First().GradeLevel}'");
+
+            // Replace placeholders first
+            ReplacePlaceHolders(memoryStream, new Dictionary<string, string>
+            {
+                {"[Level]", userData.First().GradeLevel},
+                {"[Subject]", userData.First().Subject}
+            });
+
             // Reset position before working with the document
             memoryStream.Position = 0;
 
             // Perform all document operations in a single OpenXML session
+            // Dynamically Create The Sections
             using (var doc = WordprocessingDocument.Open(memoryStream, true))
             {
                 var body = doc.MainDocumentPart.Document.Body;
                 
-                // Replace placeholders first
-                ReplacePlaceHolders(doc, new Dictionary<string, string>
-                {
-                    {"{GradeLevel}", userData.First().GradeLevel},
-                    {"{Subject}", userData.First().Subject}
-                });
-
                 // Add daily sections
                 var orderedLogs = userData
                     .OrderBy(l => l.Date)
@@ -135,19 +140,29 @@ namespace API.Services
             return new Paragraph(
                 new ParagraphProperties(
                     new Justification() { Val = JustificationValues.Center },
-                    new Bold() // ✅ Ensure the header is bold
+                    new Bold() 
                 ),
                 new Run(
                     new Text(dayName?.ToUpper() ?? "DAY")
                 ),
-                new Run(new Break()) // ✅ Add a break for proper spacing
+                new Run(new Break()) 
             );
         }
 
         private List<OpenXmlElement> CreateDaySection(LessonLogContentDto log)
         {
+
+            var learningInfo = new Paragraph
+            (
+                new Run(new Text("Learning Area: " + log.Subject)),
+                new Run(new Break()), // Line break after Learning Area
+                new Run(new Text("Grade Level: " + log.GradeLevel)),
+                new Run(new Break())  // Line break after Grade Level
+            );
             return new List<OpenXmlElement>
             {
+                CreateSection("Learning Area: ", log.Subject),
+                CreateSection("Grade Level: ", log.GradeLevel),
                 CreateSection("I. Activities", log.Activities),
                 CreateSection("II. Learning Resources", log.Materials),
                 CreateSection("III. Reflection", log.Reflection)
@@ -161,8 +176,8 @@ namespace API.Services
                 new Run(new Break()),
                 new Run(new Text(content ?? "N/A")),
                 new Run(new Break()),
-                new Run(new Break()), // ✅ Ensure extra spacing
-                new Run(new Text(" ")) // ✅ Add extra spacing to prevent merge
+                new Run(new Break()), 
+                new Run(new Text(" ")) 
             );
         }
 
