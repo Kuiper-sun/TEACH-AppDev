@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, ChevronDown, Bell, Settings, Search } from 'lucide-react';
+import { Home, ChevronDown, Bell, Settings } from 'lucide-react';
 
 const AddStudentDataForm = () => {
   const navigate = useNavigate();
@@ -9,6 +9,8 @@ const AddStudentDataForm = () => {
   const handleProfileClick = () => navigate('/profile');
   const handleStudentProgressClick = () => navigate('/student-progress');
   const handleHomeClick = () => navigate('/dashboard');
+
+  // State for form data
   const [formData, setFormData] = useState({
     subject: '',
     gradeLevel: '',
@@ -29,22 +31,117 @@ const AddStudentDataForm = () => {
     totalExamScores: '',
     writtenWorkPercentage: '30',
     performanceTaskPercentage: '40',
-    quarterlyAssessmentPercentage: '30'
+    quarterlyAssessmentPercentage: '30',
   });
 
+  // Handle input changes
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    navigate('/student-progress');
-  };
 
+    const studentData = {
+      name: formData.studentName,
+      lrn: formData.studentLRN,
+    };
+
+    const writtenWorkData = {
+      quizScores: parseFloat(formData.quizScores),
+      totalItems: parseFloat(formData.totalItems),
+      writtenActivityScore: parseFloat(formData.writtenActivityScore),
+      overallWrittenScore: parseFloat(formData.overallWrittenScore),
+    };
+
+    // Prepare the data to match the API's expected structure
+    const submissionData = {
+      subject: formData.subject,
+      gradeLevel: formData.gradeLevel,
+      section: formData.section,
+      student: {
+        name: formData.studentName,
+        lrn: formData.studentLRN,
+      },
+      writtenWork: {
+        quizScores: parseFloat(formData.quizScores),
+        totalItems: parseFloat(formData.totalItems),
+        writtenActivityScore: parseFloat(formData.writtenActivityScore),
+        overallWrittenScore: parseFloat(formData.overallWrittenScore),
+        percentage: parseFloat(formData.writtenWorkPercentage),
+      },
+      performanceTask: {
+        attendance: parseFloat(formData.attendance),
+        totalClasses: parseFloat(formData.totalClasses),
+        practicumScores: parseFloat(formData.practicumScores),
+        totalPracticumScores: parseFloat(formData.totalPracticumScores),
+        recitationScore: parseFloat(formData.recitationScore),
+        participationActivities: parseFloat(formData.participationActivities),
+        percentage: parseFloat(formData.performanceTaskPercentage),
+      },
+      quarterlyAssessment: {
+        examScores: parseFloat(formData.examScores),
+        totalExamScores: parseFloat(formData.totalExamScores),
+        percentage: parseFloat(formData.quarterlyAssessmentPercentage),
+      },
+    };
+
+      const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // 1. Create Student first
+      const studentResponse = await fetch('https://localhost:7085/api/Student', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentName: formData.studentName,
+          writtenWorks: [],
+          performanceTasks: [],
+          quarterlyAssessments: []
+        }),
+      });
+      
+      if (!studentResponse.ok) throw new Error('Failed to create student');
+      const student = await studentResponse.json();
+
+      // 2. Create Written Works for the student
+      const writtenWorkResponse = await fetch(`https://localhost:7085/api/WrittenWorks/${student.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          workDetails: JSON.stringify({
+            quizScores: formData.quizScores,
+            totalItems: formData.totalItems,
+            writtenActivityScore: formData.writtenActivityScore,
+            overallWrittenScore: formData.overallWrittenScore
+          }),
+          grade: formData.writtenWorkPercentage
+        }),
+      });
+
+      if (!writtenWorkResponse.ok) throw new Error('Failed to create written work');
+
+      // 3. Link user to student (assuming you have current user ID)
+      const userId = 1; // Replace with actual user ID from auth context
+      const joinResponse = await fetch(`https://localhost:7085/api/UserStudentJoin?userId=${userId}&studentId=${student.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!joinResponse.ok) throw new Error('Failed to link user to student');
+
+      navigate('/student-progress');
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('Submission failed: ' + error.message);
+    }
+  };
+  };
   return (
     <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
       {/* Sidebar */}
@@ -55,15 +152,24 @@ const AddStudentDataForm = () => {
 
         <nav className="flex-1">
           <div className="flex flex-col space-y-2">
-            <div className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer">
+            <div
+              className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer"
+              onClick={handleHomeClick}
+            >
               <Home className="h-5 w-5 mr-3" />
               <span>Home</span>
             </div>
-            <div className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer">
+            <div
+              className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer"
+              onClick={handleNotificationClick}
+            >
               <Bell className="h-5 w-5 mr-3" />
               <span>Notifications</span>
             </div>
-            <div className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer">
+            <div
+              className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer"
+              onClick={handleSettingsClick}
+            >
               <Settings className="h-5 w-5 mr-3" />
               <span>Settings</span>
             </div>
@@ -75,17 +181,23 @@ const AddStudentDataForm = () => {
       <div className="flex-1 bg-gray-50 rounded-tl-[2.5rem] p-8 overflow-y-auto">
         {/* Breadcrumb */}
         <div className="flex items-center mb-6 text-gray-600">
-           <span className="flex items-center cursor-pointer hover:underline" onClick={handleHomeClick}>
-           <Home className="h-4 w-4 mr-2" />
-           <span>Home</span>
-           </span>
+          <span
+            className="flex items-center cursor-pointer hover:underline"
+            onClick={handleHomeClick}
+          >
+            <Home className="h-4 w-4 mr-2" />
+            <span>Home</span>
+          </span>
           <span className="mx-2">/</span>
-          <span className="cursor-pointer hover:underline" onClick={handleStudentProgressClick}>
-             Student Progress
+          <span
+            className="cursor-pointer hover:underline"
+            onClick={handleStudentProgressClick}
+          >
+            Student Progress
           </span>
           <span className="mx-2">/</span>
           <span className="text-blue-600">Add Record</span>
-       </div>
+        </div>
 
         {/* Main Form */}
         <div className="bg-white rounded-xl shadow-sm p-8">
@@ -97,38 +209,34 @@ const AddStudentDataForm = () => {
               <div>
                 <label className="block text-sm font-medium mb-2">Select Subject</label>
                 <div className="relative">
-                  <select 
+                  <select
                     className="w-full p-3 border rounded-lg appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={formData.subject}
                     onChange={(e) => handleInputChange('subject', e.target.value)}
                   >
                     <option value="">Select Subject</option>
-                    <option value="">Mother Tongue</option>
-                    <option value="">Filipino</option>
-                    <option value="">English</option>
-                    <option value="">Mathematics</option>
-                    <option value="">Science</option>
-                    <option value="">Araling Panlipunan</option>
-                    <option value="">Edukasyon sa Pagpapakatao (ESP)</option>
-                    <option value="">MAPEH</option>
-                    <option value="">Edukasyong Pantahanan at Panglabuhayan (EPP)</option>
-                    <option value="">Technology and Livelihood Education (TLE)</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="English">English</option>
+                    <option value="Filipino">Filipino</option>
                   </select>
                   <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-2">Grade Level</label>
                 <div className="relative">
-                  <select 
+                  <select
                     className="w-full p-3 border rounded-lg appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={formData.gradeLevel}
                     onChange={(e) => handleInputChange('gradeLevel', e.target.value)}
                   >
                     <option value="">Select Grade Level</option>
-                    {[1,2,3,4,5,6].map(grade => (
-                      <option key={grade} value={grade}>Grade {grade}</option>
+                    {[1, 2, 3, 4, 5, 6].map((grade) => (
+                      <option key={grade} value={grade}>
+                        Grade {grade}
+                      </option>
                     ))}
                   </select>
                   <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -136,22 +244,23 @@ const AddStudentDataForm = () => {
               </div>
 
               <div>
-  <label className="block text-sm font-medium mb-2">Section</label>
-  <div className="relative">
-    <select
-      className="w-full p-3 border rounded-lg appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      value={formData.section}
-      onChange={(e) => handleInputChange('section', e.target.value)}
-    >
-      <option value="">Select Section</option>
-      {[1, 2, 3, 4, 5].map(section => (
-        <option key={section} value={`Section ${section}`}>Section {section}</option>
-      ))}
-    </select>
-    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-  </div>
-</div>
-
+                <label className="block text-sm font-medium mb-2">Section</label>
+                <div className="relative">
+                  <select
+                    className="w-full p-3 border rounded-lg appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={formData.section}
+                    onChange={(e) => handleInputChange('section', e.target.value)}
+                  >
+                    <option value="">Select Section</option>
+                    {[1, 2, 3, 4, 5].map((section) => (
+                      <option key={section} value={`Section ${section}`}>
+                        Section {section}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                </div>
+              </div>
             </div>
 
             {/* Personal Information */}
@@ -366,7 +475,7 @@ const AddStudentDataForm = () => {
                     totalExamScores: '',
                     writtenWorkPercentage: '30',
                     performanceTaskPercentage: '40',
-                    quarterlyAssessmentPercentage: '30'
+                    quarterlyAssessmentPercentage: '30',
                   });
                 }}
                 className="px-6 py-3 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
@@ -376,7 +485,7 @@ const AddStudentDataForm = () => {
               <button
                 type="submit"
                 className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-colors"
-              >
+                >
                 Submit
               </button>
             </div>
@@ -385,9 +494,18 @@ const AddStudentDataForm = () => {
 
         {/* Right Icons */}
         <div className="absolute top-8 right-8 flex items-center space-x-4">
-          <Bell className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleNotificationClick}/>
-          <Settings className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleSettingsClick}/>
-          <div className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer" onClick={handleProfileClick}/>
+          <Bell
+            className="h-6 w-6 text-gray-600 cursor-pointer"
+            onClick={handleNotificationClick}
+          />
+          <Settings
+            className="h-6 w-6 text-gray-600 cursor-pointer"
+            onClick={handleSettingsClick}
+          />
+          <div
+            className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
+            onClick={handleProfileClick}
+          />
         </div>
       </div>
     </div>
