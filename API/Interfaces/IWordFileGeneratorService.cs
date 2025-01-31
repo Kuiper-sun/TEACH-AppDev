@@ -9,5 +9,7 @@ namespace API.Interfaces
     public interface IWordFileGeneratorService
     {
         Task<MemoryStream> GenerateLessonPlanWordFile(int userId, int lessonPlanId, int templateId);
+
+        Task<MemoryStream> GenerateUserLessonLogWordFile(int userId, int templateId);
     }
 }

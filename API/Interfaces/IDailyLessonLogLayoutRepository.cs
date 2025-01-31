@@ -19,5 +19,7 @@ namespace API.Interfaces
 
         //Implement later when DTO is created
         public Task<DailyLessonLogLayout?> UpdateAsync(int id, UpdateLessonLogRequestDto updateLessonLogRequestDto);
+
+        public Task<List<LessonLogContentDto>> GetUserLessonLog(int userId, int templateId);
     }
 }

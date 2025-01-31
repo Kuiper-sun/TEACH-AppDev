@@ -15,11 +15,13 @@ namespace API.Controllers
     {
         private readonly IDailyLessonLogLayoutRepository _dailyLessonLogLayoutRepo;
         private readonly ITemplateTypeRepository _templateTypeRepo;
+        private readonly IWordFileGeneratorService _wordService;
 
-        public DailyLessonLogLayoutController(IDailyLessonLogLayoutRepository dailyLessonLogLayoutRepo, ITemplateTypeRepository templateTypeRepo)
+        public DailyLessonLogLayoutController(IDailyLessonLogLayoutRepository dailyLessonLogLayoutRepo, ITemplateTypeRepository templateTypeRepo, IWordFileGeneratorService wordService)
         {
             _dailyLessonLogLayoutRepo = dailyLessonLogLayoutRepo;
             _templateTypeRepo = templateTypeRepo;
+            _wordService = wordService;
         }
 
         [HttpGet]
@@ -81,6 +83,27 @@ namespace API.Controllers
                 return NotFound();
             }
             return Ok(lessonLog.ToLessonLogDto());
+        }
+
+        [HttpGet]
+        [Route("{userId}/{templateId}")]
+        public async Task<IActionResult> GetLessonLogUserData([FromRoute] int userId, int templateId)
+        {
+            var userData = await _dailyLessonLogLayoutRepo.GetUserLessonLog(userId, templateId);
+            if(userData == null || !userData.Any())
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var wordStream = await _wordService.GenerateUserLessonLogWordFile(userId, templateId);
+                return File(wordStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "LessonLogGen.docx");
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
