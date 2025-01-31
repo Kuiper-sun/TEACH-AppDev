@@ -6,14 +6,10 @@ const Activities = () => {
     const navigate = useNavigate();
 
     const activities = [
-        { id: 1, title: "English Activity 1.pdf", type: "pdf", subject: "English" },
-        { id: 2, title: "English Activity 2.pdf", type: "pdf", subject: "English" },
-        { id: 3, title: "English Activity 3.pdf", type: "pdf", subject: "English" },
-        { id: 4, title: "English Activity 4.pdf", type: "pdf", subject: "English" },
-        { id: 5, title: "Mathematics Activity 1.pdf", type: "pdf", subject: "Mathematics" },
-        { id: 6, title: "Mathematics Activity 2.pdf", type: "pdf", subject: "Mathematics" },
-        { id: 7, title: "Mathematics Activity 3.pdf", type: "pdf", subject: "Mathematics" },
-        { id: 8, title: "Mathematics Activity 4.pdf", type: "pdf", subject: "Mathematics" }
+        { id: 1, title: "Grade 2 English - Pronouns Activity 1.pdf", path: "/Grade2_English_Pronoun.pdf"},
+        { id: 2, title: "Grade 4 Math - Place Value Activity 1", path: "/Grade4_Math_PlaceValue.pdf"},
+        { id: 3, title: "Grade 4 Math - Visualizing Numbers Activity.pdf", path: "/Grade4_Math_VisualizingNumbers.pdf"},
+        { id: 4, title: "Grade 5 English - Adverb of frequency Activity.pdf", path: "/Grade5_English_AdverbofFrequency.pdf"}
     ];
 
     return (
@@ -23,14 +19,6 @@ const Activities = () => {
                 <div>
                     <div className="flex items-center mb-6">
                         <div className="text-white text-xl font-bold">TEACH</div>
-                    </div>
-                    <div className="relative mb-6">
-                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                        <input 
-                            type="text"
-                            placeholder="Search..."
-                            className="w-full pl-10 pr-4 py-2 rounded-lg bg-blue-500/30 text-white placeholder-gray-300"
-                        />
                     </div>
                     <nav className="space-y-2">
                         <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
@@ -82,14 +70,6 @@ const Activities = () => {
                 <h1 className="text-2xl font-bold mb-8">Activities</h1>
 
                 <div className="flex justify-between items-center mb-6">
-                    <div className="relative w-1/3">
-                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                        <input 
-                            type="text"
-                            placeholder="Search activities..."
-                            className="w-full pl-10 pr-4 py-2 border rounded-lg"
-                        />
-                    </div>
                     <div className="flex items-center space-x-4">
                         <div className="w-8 h-8 rounded-full bg-gray-300 cursor-pointer" 
                              onClick={() => navigate('/profile')} />
@@ -100,16 +80,22 @@ const Activities = () => {
                     {activities.map(activity => (
                         <div 
                             key={activity.id} 
-                            className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow cursor-pointer" 
-                            onClick={() => navigate(`/activities/${activity.id}`)}
+                            className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
                         >
                             <div className="flex justify-center items-center w-full h-32 bg-gray-50 rounded-lg mb-4">
                                 <svg className="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V5..." />
                                 </svg>
                             </div>
-                            <div className="text-lg font-semibold">{activity.title}</div>
-                            <div className="text-sm text-gray-500">{activity.subject}</div>
+                            {/* Activity Title with Link */}
+                            <a 
+                                href={activity.path} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-lg font-semibold text-blue-600"
+                            >
+                                {activity.title}
+                            </a>
                         </div>
                     ))}
                 </div>

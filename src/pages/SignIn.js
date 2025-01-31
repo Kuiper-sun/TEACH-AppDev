@@ -15,18 +15,25 @@ const SignIn = () => {
         setError('');
     
         try {
-            const response = await fetch('https://localhost:7085/userInfo', {
-                method: 'GET',
-                headers: { 'accept': '*/*' },
+            const response = await fetch('https://localhost:7085/login', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                email: email,
+                password: password
+              })
             });
-    
+      
             if (!response.ok) {
-                const errorMessage = await response.text();
-                throw new Error(`HTTP Error: ${response.status} - ${errorMessage}`);
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Login failed');
             }
     
             const users = await response.json();
-            const user = users.find(u => u.email === email && u.password === password);
+            const user = users;
     
             if (user) {
                 if (rememberMe) {
