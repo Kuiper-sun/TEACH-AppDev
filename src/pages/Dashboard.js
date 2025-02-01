@@ -65,8 +65,8 @@ const Dashboard = () => {
     return (
         <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
             {/* Sidebar */}
-            <div className="w-64 p-6 flex flex-col">
-                {/* Logo */}
+            <div className="w-64 p-6 flex flex-col h-screen sticky top-0">
+            {/* Logo */}
                 <div className="flex items-center mb-8">
                     <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
                 </div>
@@ -116,8 +116,8 @@ const Dashboard = () => {
 
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-50 p-8">
-                {/* Breadcrumb */}
+            <main className="flex-1 bg-gray-50 p-8 overflow-auto">
+            {/* Breadcrumb */}
                 <div className="flex items-center mb-6 text-gray-600">
                     <Home className="h-5 w-5 mr-2" />
                     <span>Home</span>
@@ -134,10 +134,10 @@ const Dashboard = () => {
                             className="bg-white p-6 rounded-xl cursor-pointer hover:shadow-lg transition-shadow"
                             onClick={() => handleFeatureClick(feature.route)}
                         >
-                            <div className="w-full h-48 bg-gradient-to-br from-teal-400 via-blue-500 to-blue-600 rounded-lg mb-4"></div>
+                            <div className="w-full h-60 bg-gradient-to-br from-teal-400 via-blue-500 to-blue-600 rounded-lg mb-4"></div>
                             <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
                             <p className="text-gray-600 text-sm mb-4">{feature.description}</p>
-                            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                            <button className="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
                                 Get Started
                             </button>
                         </div>

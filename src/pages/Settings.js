@@ -24,7 +24,7 @@ const Settings = () => {
     return (
         <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
             {/* Sidebar */}
-            <div className="w-64 p-6 flex flex-col">
+            <div className="w-64 p-6 flex flex-col h-screen sticky top-0">
                 {/* Logo */}
                 <div className="flex items-center mb-8">
                     <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
@@ -81,7 +81,7 @@ const Settings = () => {
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-50 p-8 relative">
+            <main className="flex-1 bg-gray-50 p-8 overflow-auto">
                 {/* Breadcrumb */}
                 <div className="mb-6">
                     <div className="text-lg text-gray-600 flex items-center">

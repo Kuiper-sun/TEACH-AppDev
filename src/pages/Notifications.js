@@ -41,7 +41,7 @@ const Notifications = () => {
     return (
         <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
             {/* Sidebar */}
-            <div className="w-64 p-6 flex flex-col">
+            <div className="w-64 p-6 flex flex-col h-screen sticky top-0">
                 {/* Logo */}
                 <div className="flex items-center mb-8">
                     <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
@@ -99,14 +99,14 @@ const Notifications = () => {
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-50 p-8 relative">
+            <main className="flex-1 bg-gray-50 p-8 overflow-auto">
                 {/* Breadcrumb */}
                 <div className="mb-6">
                     <div className="text-lg text-gray-600 flex items-center">
                         <Home className="h-5 w-5 mr-2 text-gray-600" />
                         <span className="cursor-pointer" onClick={() => navigate('/dashboard')}>Home</span>
                         <span className="mx-2 text-gray-600"> &gt; </span> {/* This is the '>' separator */}
-                        <span className="text-blue-600">Resources</span>
+                        <span className="text-blue-600">Notifications</span>
                     </div>
                 </div>
 

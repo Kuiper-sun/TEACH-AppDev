@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Home, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -15,17 +15,12 @@ import {
 } from 'recharts';
 
 const StudentProgress = () => {
-  const [students, setStudents] = useState([]);
-  const [writtenWorks, setWrittenWorks] = useState([]); 
-  const [userStudentJoin, setUserStudentJoin] = useState([]); 
-  const [selectedStudent, setSelectedStudent] = useState(null);
-  const [performance, setPerformance] = useState(null);
-  const [selectedGrade, setSelectedGrade] = useState('');
-  const [selectedSection, setSelectedSection] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedGrade, setSelectedGrade] = useState('4');
+  const [selectedSection, setSelectedSection] = useState('1');
+  const [selectedStudent, setSelectedStudent] = useState('John Doe');
+  const [selectedSubject, setSelectedSubject] = useState('Mathematics');
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
-
   const handleHomeClick = () => navigate('/dashboard');
 
   const gradeThresholds = [
@@ -36,146 +31,55 @@ const StudentProgress = () => {
     { label: 'Did Not Meet Expectation', color: 'bg-red-500', range: 'Below 75', passing: 'Failed' },
   ];
 
-  // Fetch students on component mount
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await fetch('https://localhost:7085/api/Student');
-        if (!response.ok) throw new Error('Failed to fetch students');
-        const data = await response.json();
-        setStudents(data);
-      } catch (error) {
-        console.error('Error fetching students:', error);
-      }
-    };
-
-    const fetchUserStudentJoin = async () => {
-      try {
-        const response = await fetch('https://localhost:7085/api/UserStudentJoin');
-        if (!response.ok) throw new Error('Failed to fetch user-student links');
-        const data = await response.json();
-        setUserStudentJoin(data);
-      } catch (error) {
-        console.error('Error fetching links:', error);
-      }
-    };
-
-    fetchStudents();
-    fetchUserStudentJoin();
-  }, []);
-
-  // Updated student performance fetch
-  useEffect(() => {
-    const fetchStudentPerformance = async () => {
-      if (selectedStudent) {
-        try {
-          // Fetch student with nested written works
-          const studentResponse = await fetch(
-            `https://localhost:7085/api/Student/${selectedStudent.id}/with-data`
-          );
-          if (!studentResponse.ok) throw new Error('Failed to fetch student data');
-          const studentData = await studentResponse.json();
-
-          // Fetch performance tasks
-          const performanceResponse = await fetch(
-            `https://localhost:7085/api/PerformanceTasks/${selectedStudent.id}`
-          );
-          const performanceData = await performanceResponse.json();
-
-          // Fetch assessments
-          const assessmentResponse = await fetch(
-            `https://localhost:7085/api/QuarterlyAssessments/${selectedStudent.id}`
-          );
-          const assessmentData = await assessmentResponse.json();
-
-          setPerformance({
-            ...studentData,
-            performanceTasks: performanceData,
-            quarterlyAssessments: assessmentData
-          });
-        } catch (error) {
-          console.error('Error fetching performance:', error);
-          setPerformance(null);
-        }
-      }
-    };
-
-    fetchStudentPerformance();
-  }, [selectedStudent]);
-
-  // Updated add student function
-  const addStudent = async (studentData) => {
-    try {
-      // 1. Create student
-      const studentResponse = await fetch('https://localhost:7085/api/Student', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentName: studentData.name,
-          writtenWorks: [],
-          performanceTasks: [],
-          quarterlyAssessments: []
-        }),
-      });
-      
-      const newStudent = await studentResponse.json();
-
-      // 2. Link to user (assuming current user ID is available)
-      const userId = 1; // Replace with actual user ID
-      await fetch(
-        `https://localhost:7085/api/UserStudentJoin?userId=${userId}&studentId=${newStudent.id}`,
-        { method: 'POST' }
-      );
-
-      setStudents([...students, newStudent]);
-    } catch (error) {
-      console.error('Error adding student:', error);
+  const mockData = {
+    writtenWork: {
+      data: [
+        { name: 'Quiz 1', value: 85 },
+        { name: 'Quiz 2', value: 90 },
+        { name: 'Quiz 3', value: 88 },
+        { name: 'Quiz 4', value: 92 }
+      ],
+      computations: [
+        { component: 'Written Work (%)', computation: 'Quiz 85/100 x 0.25% + Written 95/100 x 30%', score: '26.25' },
+        { component: 'Performance Task (%)', computation: 'Attendance + Recitation + Recitation', score: '44.75' },
+        { component: 'Quarterly Assessment (%)', computation: 'Exam 92/100 x 20%', score: '18.40' }
+      ]
+    },
+    performance: {
+      data: [
+        { name: 'Task 1', value: 88 },
+        { name: 'Task 2', value: 85 },
+        { name: 'Task 3', value: 90 },
+        { name: 'Task 4', value: 87 }
+      ],
+      computations: [
+        { component: 'Performance 1', computation: 'Task 1 (88/100 x 25%)', score: '22.00' },
+        { component: 'Performance 2', computation: 'Task 2 (85/100 x 25%)', score: '21.25' },
+        { component: 'Performance 3', computation: 'Task 3 (90/100 x 25%)', score: '22.50' },
+        { component: 'Performance 4', computation: 'Task 4 (87/100 x 25%)', score: '21.75' }
+      ]
+    },
+    attendance: {
+      data: [
+        { name: 'Week 1', value: 100 },
+        { name: 'Week 2', value: 90 },
+        { name: 'Week 3', value: 100 },
+        { name: 'Week 4', value: 100 }
+      ],
+      computations: [
+        { component: 'Week 1', computation: 'Present all days (100%)', score: '100.00' },
+        { component: 'Week 2', computation: 'Absent 1 day (90%)', score: '90.00' },
+        { component: 'Week 3', computation: 'Present all days (100%)', score: '100.00' },
+        { component: 'Week 4', computation: 'Present all days (100%)', score: '100.00' }
+      ]
     }
   };
 
-  // Updated delete function
-  const deleteStudent = async (studentId) => {
-    try {
-      // Delete student and related data
-      await fetch(`https://localhost:7085/api/Student/${studentId}`, {
-        method: 'DELETE'
-      });
-
-      // Delete user-student link
-      await fetch(`https://localhost:7085/api/UserStudentJoin/${studentId}`, {
-        method: 'DELETE'
-      });
-
-      setStudents(students.filter(s => s.id !== studentId));
-    } catch (error) {
-      console.error('Error deleting student:', error);
-    }
-  };
-
-  // Updated data processing
-  const pieData = performance ? [
-    { 
-      name: 'Written Work', 
-      value: performance.writtenWorks.reduce((sum, w) => sum + w.grade, 0),
-      color: '#4F46E5' 
-    },
-    { 
-      name: 'Performance', 
-      value: performance.performanceTasks.reduce((sum, t) => sum + t.grade, 0),
-      color: '#10B981' 
-    },
-    { 
-      name: 'Assessment', 
-      value: performance.quarterlyAssessments.reduce((sum, a) => sum + a.grade, 0),
-      color: '#6366F1' 
-    }
-  ] : [];
-
-  // Filtering logic
-  const filteredStudents = students.filter(student => 
-    (!selectedGrade || student.gradeLevel?.toString() === selectedGrade) &&
-    (!selectedSection || student.section === selectedSection)
-  );
+  const pieData = [
+    { name: 'Written Work', value: 26.25, color: '#4F46E5' },
+    { name: 'Performance', value: 44.75, color: '#10B981' },
+    { name: 'Assessment', value: 18.40, color: '#6366F1' }
+  ];
 
   const DetailChart = ({ data, computations }) => (
     <div className="space-y-8">
@@ -242,7 +146,7 @@ const StudentProgress = () => {
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-3xl font-bold text-gray-800">{performance?.finalGrade?.toFixed(2)}%</div>
+                <div className="text-3xl font-bold text-gray-800">75%</div>
               </div>
             </div>
             <div className="aspect-square bg-gray-50 rounded-full flex items-center justify-center relative">
@@ -300,7 +204,7 @@ const StudentProgress = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {performance?.writtenWork?.computations?.map((item, index) => (
+            {mockData.writtenWork.computations.map((item, index) => (
               <tr key={index}>
                 <td className="px-6 py-4 text-sm text-gray-900">{item.component}</td>
                 <td className="px-6 py-4 text-sm text-gray-600">{item.computation}</td>
@@ -316,6 +220,8 @@ const StudentProgress = () => {
   return (
     <div className="w-full max-w-7xl mx-auto p-8 bg-gray-50 min-h-screen">
       {/* Breadcrumb */}
+
+      
       <div className="flex items-center mb-6 text-gray-600">
         <Home className="h-4 w-4 mr-2" />
         <span className="mr-2 cursor-pointer hover:text-blue-600" onClick={handleHomeClick}>Home</span>
@@ -323,7 +229,7 @@ const StudentProgress = () => {
         <span className="text-blue-600">Student Progress</span>
       </div>
 
-      {/* Header */}
+      {/* Header - Updated to use navigation */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Student Progress</h1>
         <button
@@ -367,23 +273,22 @@ const StudentProgress = () => {
           </div>
 
           <div className="relative">
-            <select
-              className="w-full p-2 pl-3 pr-10 border rounded-lg appearance-none bg-white"
-              value={selectedStudent?.id || ''}
-              onChange={(e) => {
-                const student = students.find(s => s.id === parseInt(e.target.value));
-                setSelectedStudent(student || null);
-              }}
-            >
-              <option value="">Select Student</option>
-              {filteredStudents.map(student => (
-                <option key={student.id} value={student.id}>
-                  {student.studentName}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-4 w-4" />
-          </div>
+        <input
+          list="student-options"
+          className="w-full p-2 pl-3 pr-10 border rounded-lg bg-white"
+          value={selectedStudent}
+          onChange={(e) => setSelectedStudent(e.target.value)}
+          placeholder="Select or Type Student"
+       />
+           <datalist id="student-options">
+            <option value="John Doe" />
+            <option value="Jane Smith" />
+            <option value="Alice Johnson" />
+            <option value="Bob Williams" />
+           </datalist>
+          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-4 w-4" />
+         </div>
+
 
           <div className="relative">
             <select 
@@ -392,8 +297,16 @@ const StudentProgress = () => {
               onChange={(e) => setSelectedSubject(e.target.value)}
             >
               <option value="">Select Subject</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Science">Science</option>
+              <option value="">Mother Tongue</option>
+              <option value="">Filipino</option>
+              <option value="">English</option>
+              <option value="">Mathematics</option>
+              <option value="">Science</option>
+              <option value="">Araling Panlipunan</option>
+              <option value="">Edukasyon sa Pagpapakatao (ESP)</option>
+              <option value="">MAPEH</option>
+              <option value="">Edukasyong Pantahanan at Panglabuhayan (EPP)</option>
+              <option value="">Technology and Livelihood Education (TLE)</option>
             </select>
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-4 w-4" />
           </div>
@@ -403,123 +316,110 @@ const StudentProgress = () => {
         <div className="grid grid-cols-5 gap-4">
           {gradeThresholds.map((threshold, index) => (
             <div key={index} className={`${threshold.color} p-4 rounded-lg text-white`}>
-              <div className="font-semibold">{threshold.label}</div>
-              <div className="text-sm">{threshold.range}</div>
-              <div className="text-sm">{threshold.passing}</div>
+            <div className="font-semibold">{threshold.label}</div>
+            <div className="text-sm">{threshold.range}</div>
+            <div className="text-sm">{threshold.passing}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Grade Overview */}
+      <div className="grid grid-cols-2 gap-8">
+        <div className="bg-white p-6 rounded-xl shadow-sm">
+          <h3 className="text-lg font-semibold mb-4">Student Information</h3>
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <span className="text-gray-600">Name:</span>
+              <span>John Doe</span>
             </div>
+            <div className="grid grid-cols-2 gap-2">
+              <span className="text-gray-600">LRN:</span>
+              <span>123456789</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <span className="text-gray-600">Subject:</span>
+              <span>Mathematics</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <span className="text-gray-600">Grade:</span>
+              <span>4</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <span className="text-gray-600">Section:</span>
+              <span>1</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center justify-center">
+          <h3 className="text-lg font-semibold mb-4">Final Grade</h3>
+          <div className="text-6xl font-bold text-lime-500">88.50</div>
+          <div className="text-gray-600 mt-2">Very Satisfactory - Passed</div>
+        </div>
+      </div>
+
+      {/* Performance Metrics */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          {['overview', 'written', 'performance', 'attendance'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`p-2 capitalize ${
+                activeTab === tab
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              {tab === 'overview' ? 'Overview' : 
+               tab === 'written' ? 'Written Work' :
+               tab === 'performance' ? 'Performance' : 'Attendance'}
+            </button>
           ))}
         </div>
 
-        {/* Student Information and Performance */}
-        {selectedStudent && performance && (
-          <>
-            {/* Student Information */}
-            <div className="grid grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-4">Student Information</h3>
-                <div className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="text-gray-600">Name:</span>
-                    <span>{selectedStudent.studentName}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="text-gray-600">LRN:</span>
-                    <span>{selectedStudent.lrn || 'N/A'}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="text-gray-600">Grade:</span>
-                    <span>{selectedStudent.gradeLevel || 'N/A'}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="text-gray-600">Section:</span>
-                    <span>{selectedStudent.section || 'N/A'}</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Final Grade */}
-              <div className="bg-white p-6 rounded-xl shadow-sm flex flex-col items-center justify-center">
-                <h3 className="text-lg font-semibold mb-4">Final Grade</h3>
-                <div className="text-6xl font-bold text-lime-500">{performance.finalGrade.toFixed(2)}</div>
-                <div className="text-gray-600 mt-2">
-                  {gradeThresholds.find(t => 
-                    performance.finalGrade >= parseFloat(t.range.split('-')[0]) && 
-                    performance.finalGrade <= parseFloat(t.range.split('-')[1] || '100')
-                  )?.label || 'N/A'}
-                </div>
-              </div>
-            </div>
+        <div className="mt-4">
+          {activeTab === 'overview' ? (
+            <Overview />
+          ) : activeTab === 'written' ? (
+            <DetailChart data={mockData.writtenWork.data} computations={mockData.writtenWork.computations} />
+          ) : activeTab === 'performance' ? (
+            <DetailChart data={mockData.performance.data} computations={mockData.performance.computations} />
+          ) : (
+            <DetailChart data={mockData.attendance.data} computations={mockData.attendance.computations} />
+          )}
+        </div>
 
-            {/* Performance Metrics */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="grid grid-cols-4 gap-4 mb-6">
-                {['overview', 'written', 'performance', 'attendance'].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`p-2 capitalize ${
-                      activeTab === tab
-                        ? 'border-b-2 border-blue-600 text-blue-600'
-                        : 'text-gray-600 hover:text-blue-600'
-                    }`}
-                  >
-                    {tab === 'overview' ? 'Overview' : 
-                     tab === 'written' ? 'Written Work' :
-                     tab === 'performance' ? 'Performance' : 'Attendance'}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-4">
-                {activeTab === 'overview' ? (
-                  <Overview />
-                ) : activeTab === 'written' ? (
-                  <DetailChart 
-                    data={performance.writtenWork?.data || []} 
-                    computations={performance.writtenWork?.computations || []} 
-                  />
-                ) : activeTab === 'performance'? (
-                  <DetailChart 
-                    data={performance.performance?.data || []} 
-                    computations={performance.performance?.computations || []} 
-                  />
-                ) : (
-                  <DetailChart 
-                    data={performance.attendance?.data || []} 
-                    computations={performance.attendance?.computations || []} 
-                  />
-                )}
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* Print Button */}
-        <button
-          onClick={() => window.print()}
-          className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded-md shadow-sm flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3B82F6" />
-                <stop offset="100%" stopColor="#2563EB" />
-              </linearGradient>
-            </defs>
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              fill="url(#blueGradient)" 
-              stroke="currentColor"
-              d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-            />
-          </svg>
-          Print
-        </button>
       </div>
+
+      <button
+  onClick={() => window.print()}
+  className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded-md shadow-sm flex items-center gap-2"
+>
+  <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#3B82F6" />  {/* blue-500 */}
+        <stop offset="100%" stop-color="#2563EB" /> {/* blue-600 */}
+      </linearGradient>
+    </defs>
+    <path 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      strokeWidth={2} 
+      fill="url(#blueGradient)" 
+      stroke="currentColor"
+      d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+    />
+  </svg>
+  Print
+</button>
+
+
     </div>
-  );
+  </div>
+);
 };
 
 export default StudentProgress;

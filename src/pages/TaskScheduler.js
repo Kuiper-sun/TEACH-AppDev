@@ -182,7 +182,7 @@ const TaskScheduler = () => {
       <div className="w-64 p-6 flex flex-col bg-gradient-to-b from-blue-500 to-blue-400">
         {/* Logo */}
         <div className="flex items-center mb-8">
-          <span className="text-2xl font-bold text-white">TEACH</span>
+            <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
         </div>
 
         {/* Navigation */}
@@ -203,24 +203,27 @@ const TaskScheduler = () => {
           </div>
         </nav>
 
-        {/* Profile */}
-        <div className="flex items-center mt-auto cursor-pointer" onClick={handleProfileClick}>
-          <img 
-            src="/api/placeholder/40/40"
-            alt="Profile"
-            className="w-10 h-10 rounded-full bg-gray-300"
-          />
-          <div className="ml-3 text-white">
-            <div className="font-medium">User Profile</div>
-            <div className="text-sm text-gray-300">Profile</div>
-          </div>
-        </div>
+                <div className="space-y-1">
+                    <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                        onClick={() => navigate('/profile')}>
+                        <img 
+                            src="images/Profile.png" 
+                            alt="User Profile" 
+                            className="w-11 h-11 rounded-full object-cover mr-3"
+                        />                        
+                        <div>
+                            <div className="font-medium">Pamela Golosinda</div>
+                            <div className="text-sm text-gray-300">Profile</div>
+                        </div>
+                    </div>
 
-        {/* Logout Button */}
-        <div className="flex items-center text-white p-3 rounded-lg hover:bg-white/10 cursor-pointer mt-8" onClick={handleLogout}>
-          <LogOut className="h-5 w-5 mr-3" />
-          <span>Logout</span>
-        </div>
+                    {/* Logout Button */}
+                    <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                         onClick={handleLogout}>
+                        <LogOut className="h-5 w-5 mr-3" />
+                        <span>Log Out</span>
+                    </div>
+                </div>
       </div>
 
       {/* Main Content */}
@@ -249,18 +252,6 @@ const TaskScheduler = () => {
             >
               Day
             </button>
-          </div>
-
-          {/* Right Icons */}
-          <div className="flex items-center space-x-4">
-            <Bell className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleNotificationClick} />
-            <Settings className="h-6 w-6 text-gray-600 cursor-pointer" onClick={handleSettingsClick} />
-            <img 
-              src="/api/placeholder/40/40"
-              alt="Profile"
-              className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
-              onClick={handleProfileClick}
-            />
           </div>
         </div>
 
