@@ -29,23 +29,24 @@ const Profile = () => {
         }));
     };
 
+    const handleLogout = () => {
+        // Clear session or authentication data (e.g., localStorage)
+        localStorage.removeItem('isLoggedIn');
+        // Navigate to the SignIn page
+        navigate('/signin');
+    };
+
+    const handleProfileClick = () => {
+        navigate("/profile");
+      };
+
     return (
         <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
             {/* Sidebar */}
             <div className="w-64 p-6 flex flex-col">
                 {/* Logo */}
                 <div className="flex items-center mb-8">
-                    <span className="text-2xl font-bold text-white">TEACH</span>
-                </div>
-
-                {/* Search */}
-                <div className="relative mb-8">
-                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                    <input 
-                        type="text"
-                        placeholder="Search..."
-                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-blue-600/30 text-white placeholder-gray-300 focus:outline-none"
-                    />
+                    <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
                 </div>
 
                 {/* Navigation */}
@@ -76,29 +77,39 @@ const Profile = () => {
                 </nav>
 
                 {/* Profile */}
-                <div className="flex items-center mt-auto cursor-pointer bg-white/10 p-3 rounded-lg">
+                <div 
+                    className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                    onClick={handleProfileClick}
+                >
                     <img 
-                        src="/api/placeholder/40/40"
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full bg-gray-300"
+                        src="images/Profile.png" 
+                        alt="User Profile" 
+                        className="w-11 h-11 rounded-full object-cover mr-3"
                     />
-                    <div className="ml-3 text-white">
+                    <div>
                         <div className="font-medium">Pamela Golosinda</div>
                         <div className="text-sm text-gray-300">Profile</div>
                     </div>
                 </div>
+
+                    {/* Logout Button */}
+                    <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                         onClick={handleLogout}>
+                        <LogOut className="h-5 w-5 mr-3" />
+                        <span>Log Out</span>
+                    </div>
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-50 rounded-tl-[2.5rem] p-8 relative">
+            <main className="flex-1 bg-gray-50 p-8 relative">
                 {/* Breadcrumb */}
-                <div className="flex items-center mb-6 text-gray-600">
-                  <Home className="h-4 w-4 mr-2 cursor-pointer" onClick={handleHomeClick} />
-                  <span className="mr-2 cursor-pointer hover:underline" onClick={handleHomeClick}>
-                    Home
-                  </span>
-                  <span className="mx-2">/</span>
-                  <span>Profile</span>
+                <div className="mb-6">
+                    <div className="text-lg text-gray-600 flex items-center">
+                        <Home className="h-5 w-5 mr-2 text-gray-600" />
+                        <span className="cursor-pointer" onClick={() => navigate('/dashboard')}>Home</span>
+                        <span className="mx-2 text-gray-600"> &gt; </span> {/* This is the '>' separator */}
+                        <span className="text-blue-600">Profile</span>
+                    </div>
                 </div>
 
                 {/* Title */}
@@ -109,7 +120,7 @@ const Profile = () => {
                     <div className="bg-white rounded-xl p-6">
                         <div className="flex items-center gap-6 mb-8">
                             <img 
-                                src="/api/placeholder/80/80"
+                                src="/images/profile.png"
                                 alt="Profile"
                                 className="w-20 h-20 rounded-full"
                             />
@@ -172,23 +183,6 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Right Icons */}
-                <div className="absolute top-8 right-8 flex items-center space-x-4">
-      <Bell 
-        className="h-6 w-6 text-gray-600 cursor-pointer" 
-        onClick={handleNotificationsClick} 
-      />
-      <Settings 
-        className="h-6 w-6 text-gray-600 cursor-pointer" 
-        onClick={handleSettingsClick} 
-      />
-      <img 
-        src="/api/placeholder/40/40"
-        alt="Profile"
-        className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
-      />
-    </div>
             </main>
         </div>
     );

@@ -10,13 +10,24 @@ const Settings = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [emailNotification, setEmailNotification] = useState(true);
 
+    const handleLogout = () => {
+        // Clear session or authentication data (e.g., localStorage)
+        localStorage.removeItem('isLoggedIn');
+        // Navigate to the SignIn page
+        navigate('/signin');
+    };
+
+    const handleProfileClick = () => {
+        navigate("/profile");
+      };
+    
     return (
         <div className="flex h-screen bg-gradient-to-b from-blue-500 to-blue-400">
             {/* Sidebar */}
             <div className="w-64 p-6 flex flex-col">
                 {/* Logo */}
                 <div className="flex items-center mb-8">
-                    <span className="text-2xl font-bold text-white">TEACH</span>
+                    <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-12 w-auto" />
                 </div>
 
                 {/* Navigation */}
@@ -46,27 +57,39 @@ const Settings = () => {
                 </nav>
 
                 {/* Profile */}
-                <div className="flex items-center mt-auto cursor-pointer" onClick={() => navigate('/profile')}>
+                <div 
+                    className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                    onClick={handleProfileClick}
+                >
                     <img 
-                        src="/api/placeholder/40/40"
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full bg-gray-300"
+                        src="images/Profile.png" 
+                        alt="User Profile" 
+                        className="w-11 h-11 rounded-full object-cover mr-3"
                     />
-                    <div className="ml-3 text-white">
+                    <div>
                         <div className="font-medium">Pamela Golosinda</div>
                         <div className="text-sm text-gray-300">Profile</div>
                     </div>
                 </div>
+
+                    {/* Logout Button */}
+                    <div className="flex items-center text-white p-2 rounded hover:bg-blue-500/30 cursor-pointer" 
+                         onClick={handleLogout}>
+                        <LogOut className="h-5 w-5 mr-3" />
+                        <span>Log Out</span>
+                    </div> 
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-50 rounded-tl-[2.5rem] p-8 relative overflow-y-auto">
+            <main className="flex-1 bg-gray-50 p-8 relative">
                 {/* Breadcrumb */}
-                <div className="flex items-center mb-6 text-gray-600">
-                    <Home className="h-4 w-4 mr-2" />
-                    <span className="mr-2">Home</span>
-                    <span className="mx-2">/</span>
-                    <span>Settings</span>
+                <div className="mb-6">
+                    <div className="text-lg text-gray-600 flex items-center">
+                        <Home className="h-5 w-5 mr-2 text-gray-600" />
+                        <span className="cursor-pointer" onClick={() => navigate('/dashboard')}>Home</span>
+                        <span className="mx-2 text-gray-600"> &gt; </span> {/* This is the '>' separator */}
+                        <span className="text-blue-600">Settings</span>
+                    </div>
                 </div>
 
                 {/* Title */}
@@ -119,7 +142,7 @@ const Settings = () => {
                             <label className="block text-sm font-medium mb-2">Change Avatar</label>
                             <div className="flex items-center gap-4">
                                 <img 
-                                    src="/api/placeholder/48/48"
+                                    src="/images/Profile.png"
                                     alt="Current avatar"
                                     className="w-12 h-12 rounded-full"
                                 />
@@ -189,28 +212,6 @@ const Settings = () => {
                         </div>
                     </section>
 
-                    {/* Notifications */}
-                    <section className="bg-white rounded-xl p-6">
-                        <h2 className="text-lg font-semibold mb-2">Notifications</h2>
-                        <p className="text-gray-500 text-sm mb-6">You can manage your notifications here.</p>
-                        
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <div className="font-medium">Email Notification</div>
-                                <div className="text-sm text-gray-500">You will be notified when a new email arrives</div>
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                                <input 
-                                    type="checkbox" 
-                                    checked={emailNotification}
-                                    onChange={() => setEmailNotification(!emailNotification)}
-                                    className="sr-only peer"
-                                />
-                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                            </label>
-                        </div>
-                    </section>
-
                     {/* Delete Account */}
                     <section className="bg-white rounded-xl p-6">
                         <h2 className="text-lg font-semibold mb-2">Delete Account</h2>
@@ -220,17 +221,6 @@ const Settings = () => {
                             I want to delete my account
                         </button>
                     </section>
-                </div>
-
-                {/* Right Icons */}
-                <div className="absolute top-8 right-8 flex items-center space-x-4">
-                    <Bell className="h-6 w-6 text-gray-600 cursor-pointer" />
-                    <SettingsIcon className="h-6 w-6 text-gray-600 cursor-pointer" />
-                    <img 
-                        src="/api/placeholder/40/40"
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full bg-gray-300 cursor-pointer"
-                    />
                 </div>
             </main>
         </div>
