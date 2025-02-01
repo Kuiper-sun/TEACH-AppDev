@@ -18,12 +18,12 @@ const ForgotPassword = () => {
             <div className="w-full max-w-md space-y-6">
                 {/* Logo */}
                 <div className="flex justify-center items-center mb-2">
-                    <div className="text-3xl font-bold text-gray-900">TEACH</div>
+                    <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-24 w-auto" />
                 </div>
 
                 {/* Title */}
                 <div className="text-center space-y-1">
-                    <h2 className="text-xl font-semibold text-gray-900">
+                    <h2 className="text-xl font-bold text-gray-900">
                         Reset Your Password
                     </h2>
                     <p className="text-sm text-gray-700 max-w-sm mx-auto">
