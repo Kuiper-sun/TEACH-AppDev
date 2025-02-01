@@ -25,19 +25,24 @@ namespace API.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUserTemplateData(int userId)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            
             var user = await _userAccountRepo.GetByIdAsync(userId);
             if(user == null)
             {
                 return NotFound();
             }
 
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var userData = await _userTemplateJoinRepo.GetUserData(user);
+
+            if(!userData.Any())
+            {
+                return NotFound("No templates found");
+            }
             return Ok(userData);
         }
 

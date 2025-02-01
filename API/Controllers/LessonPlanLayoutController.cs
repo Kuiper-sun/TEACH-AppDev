@@ -83,7 +83,7 @@ namespace API.Controllers
             return Ok(lessonPlan.tolessonPlanDto());
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("{userId}/{lessonPlanId}/{templateId}")]
         public async Task<IActionResult> GetLessonPlanContent([FromRoute] int userId, [FromRoute] int lessonPlanId, [FromRoute] int templateId)
         {

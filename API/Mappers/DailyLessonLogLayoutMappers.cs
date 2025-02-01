@@ -17,7 +17,8 @@ namespace API.Mappers
                 Subject = dailyLessonLogLayout.Subject,
                 Activities = dailyLessonLogLayout.Activities,
                 Materials = dailyLessonLogLayout.Materials,
-                Reflection = dailyLessonLogLayout.Reflection
+                Reflection = dailyLessonLogLayout.Reflection,
+                DayOfWeek = dailyLessonLogLayout.DayOfWeek
             };
         }
 
@@ -30,6 +31,7 @@ namespace API.Mappers
                 Activities = request.Activities,
                 Materials = request.Materials,
                 Reflection = request.Reflection,
+                DayOfWeek = request.DayOfWeek,
                 TemplateTypeId = TemplateId
             };
         }

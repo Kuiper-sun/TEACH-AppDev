@@ -22,3 +22,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+Frontend/public/favicon.ico
+Frontend/public/index.html
+Frontend/public/logo192.png
+Frontend/public/logo512.png
+Frontend/public/manifest.json
+Frontend/public/robots.txt

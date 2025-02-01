@@ -12,5 +12,7 @@ namespace API.Dto.DailyLessonLog
         public string Activities{ get; set; } = String.Empty;
         public string Materials { get; set; } = String.Empty;
         public string Reflection { get; set; } = String.Empty;
+        public string DayOfWeek { get; set; } = String.Empty;
+
     }
 }

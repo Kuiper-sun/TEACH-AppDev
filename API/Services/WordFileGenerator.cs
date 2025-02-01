@@ -16,11 +16,13 @@ namespace API.Services
         private readonly IWebHostEnvironment _env;
         private readonly ILessonPlanLayoutRepository _lessonPlanRepo;
         private readonly IDailyLessonLogLayoutRepository _lessonLog;
-        public WordFileGenerator(IWebHostEnvironment env, ILessonPlanLayoutRepository lessonPlanRepo, IDailyLessonLogLayoutRepository lessonLog)
+        private readonly IUserAccountRepository _userRepo;
+        public WordFileGenerator(IWebHostEnvironment env, ILessonPlanLayoutRepository lessonPlanRepo, IDailyLessonLogLayoutRepository lessonLog, IUserAccountRepository userRepo)
         {
             _env = env;
             _lessonPlanRepo = lessonPlanRepo;
             _lessonLog = lessonLog;
+            _userRepo = userRepo;
         }
 
         //Generates Word file for lesson plan
@@ -78,6 +80,12 @@ namespace API.Services
                 throw new Exception("No lesson logs found for this user or template");
             }
 
+            var user = await _userRepo.GetByIdAsync(userId);
+            if(user == null)
+            {
+                throw new Exception("User does not exist.");
+            }
+
             //Template Path
             var templatePath = Path.Combine(_env.ContentRootPath, "Templates", "LessonLog.docx");
             if (!File.Exists(templatePath))
@@ -98,7 +106,8 @@ namespace API.Services
             ReplacePlaceHolders(memoryStream, new Dictionary<string, string>
             {
                 {"[Level]", userData.First().GradeLevel},
-                {"[Subject]", userData.First().Subject}
+                {"[Subject]", userData.First().Subject},
+                {"[Name]", user.FullName}
             });
 
             // Reset position before working with the document
