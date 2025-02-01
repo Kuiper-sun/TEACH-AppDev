@@ -54,12 +54,12 @@ const CreateAccount = () => {
             <div className="w-full max-w-md space-y-6">
                 {/* Logo */}
                 <div className="flex justify-center items-center mb-2">
-                    <div className="text-3xl font-bold text-gray-900">TEACH</div>
+                    <img  src="/images/LogoName.png" alt="TEACH Logo" className="h-24 w-auto" />
                 </div>
 
                 {/* Title */}
                 <div className="text-center space-y-1">
-                    <h2 className="text-xl font-semibold text-gray-900">
+                    <h2 className="text-2xl font-bold text-gray-900">
                         Sign Up For Free
                     </h2>
                     <p className="text-sm text-gray-700">
